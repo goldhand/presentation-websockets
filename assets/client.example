@@ -1,0 +1,11 @@
+// Get the user's username
+const username = prompt('Enter your username');
+
+// Connect to server
+const io = require('socket.io-client')();
+
+// When connected to the server
+io.sockets.on('connection', socket => {
+  // send username to the server
+  socket.emit('LOGIN', {username});
+});

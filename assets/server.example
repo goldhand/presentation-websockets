@@ -1,0 +1,14 @@
+// Start server on port 3000
+const io = require('socket.io').listen(3000);
+
+// {username : id} map
+const users = {};
+
+// When a client connects
+io.sockets.on('connection', socket => {
+  // Listen for the LOGIN event
+  socket.on('LOGIN', data => {
+    // map username to id
+    users[data.username] = socket.id;
+  });
+});

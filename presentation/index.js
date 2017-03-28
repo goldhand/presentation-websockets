@@ -14,6 +14,8 @@ import {
   Slide,
   Text,
   Image,
+  CodePane,
+  ComponentPlayground,
 } from 'spectacle';
 
 // Import image preloader util
@@ -38,6 +40,11 @@ const images = {
 };
 
 preloader(images);
+
+const codes = {
+  server: require("raw-loader!../assets/server.example"),
+  client: require("raw-loader!../assets/client.example"),
+};
 
 const theme = createTheme({
   primary: 'white',
@@ -117,6 +124,14 @@ export default class Presentation extends React.Component {
             <Quote textSize={'2.5rem'} textColor="secondary" padding="1rem">It works on every platform, browser or device, focusing equally on reliability and speed.</Quote>
             <Cite textColor="primary">socket.io</Cite>
           </BlockQuote>
+        </Slide>
+        <Slide bgColor="tertiary">
+          <Heading size={6} textColor="primary" caps>Server</Heading>
+          <CodePane lang="js" source={codes.server} margin="20px auto" textSize="0.7em" />
+        </Slide>
+        <Slide bgColor="tertiary" transition={['zoom']}>
+          <Heading size={6} textColor="primary" textAlign="top" caps>Client</Heading>
+          <CodePane lang="js" source={codes.client} margin="20px auto" textSize="0.6em" />
         </Slide>
         <Slide textColor="primary">
           <Heading size={6} caps>PaintApp.IO</Heading>
