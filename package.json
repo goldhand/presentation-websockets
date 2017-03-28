@@ -1,0 +1,22 @@
+{
+  "name": "presentation-websockets",
+  "version": "1.0.0",
+  "description": "Demo PaintApp.IO",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goldhand/presentation-websockets.git"
+  },
+  "keywords": [],
+  "author": "Will Farley <wfarley@amazon.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goldhand/presentation-websockets/issues"
+  },
+  "homepage": "https://github.com/goldhand/presentation-websockets#readme"
+}
