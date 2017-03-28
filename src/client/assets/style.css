@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font: 13px Helvetica, Arial;
+}
+#paint-container {
+  width: 100%;
+  cursor: pointer !important;
+}
+#controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+}
+.Button {
+  padding: 5px 10px;
+}
+.ColorSelector {
+  vertical-align: top;
+}
+.PaintCanvas {
+  display: block;
+}
