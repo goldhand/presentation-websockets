@@ -1,9 +1,9 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 
-export default {
+module.exports = {
   devtool: 'inline-source-map',
   entry: path.resolve(PROJECT_ROOT, 'src/client/index'),
   module: {
