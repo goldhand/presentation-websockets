@@ -3,6 +3,7 @@ import React from 'react';
 
 // Import Spectacle Core tags
 import {
+  Appear,
   BlockQuote,
   Cite,
   Deck,
@@ -31,9 +32,9 @@ require('spectacle/lib/themes/default/index.css');
 import randomSlide from './randomSlide';
 
 const links = {
-  preview: '#',
-  server: '#',
-  client: '#',
+  preview: '#',  // TODO: deploy demo
+  server: '#',  // TODO: set up git tags for starting point
+  client: '#',  // TODO: set up git tags for starting point
 };
 
 const images = {
@@ -61,7 +62,11 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck transition={['zoom', 'slide']} transitionDuration={500} theme={theme}>
-        {/* intro */}
+        {/*
+          *************
+          part-1: intro
+          *************
+        */}
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
             Websockets @AMZN
@@ -78,7 +83,6 @@ export default class Presentation extends React.Component {
           <br />
           <Text textColor="primary">@wfarley</Text>
         </Slide>
-        {/* summary */}
         <Slide transition={['fade']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Summary</Heading>
           <Heading size={2} textColor="secondary">NodeJS @ Amzn</Heading>
@@ -88,21 +92,40 @@ export default class Presentation extends React.Component {
           <Heading size={6} textColor="secondary">Client</Heading>
           <Text size={6} textColor="secondary">Questions</Text>
         </Slide>
+        {/*
+          **************
+          part-2: NodeJS
+          **************
+        */}
         <Slide transition={['spin']}>
           <Heading size={6} textColor="secondary" caps>NodeJS @ Amzn</Heading>
         </Slide>
         <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
           <Heading size={3} textColor="secondary" textAlign="left">Challenges</Heading>
-          <List>
-            <ListItem>Building (apollo)</ListItem>
-            <ListItem>Packages (brazil)</ListItem>
-          </List>
+          <Appear>
+            <List>
+              <ListItem>Building (apollo)</ListItem>
+              <ListItem>Packages (brazil)</ListItem>
+            </List>
+          </Appear>
           <Heading size={3} textColor="secondary" textAlign="left">NodeJS Things</Heading>
-          <List>
-            <ListItem>Server / Client</ListItem>
-            <ListItem>App / Package</ListItem>
-          </List>
+          <Appear>
+            <List>
+              <ListItem>Server / Client</ListItem>
+              <ListItem>App / Package</ListItem>
+            </List>
+          </Appear>
         </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} textAlign="right">Client</Heading>
+          <Image src={images.dependencyDiagram} width={'50%'} />
+          <Heading size={6} textAlign="left">Server</Heading>
+        </Slide>
+        {/*
+          ******************
+          part-3: Websockets
+          ******************
+        */}
         <Slide>
           <Heading size={6} textColor="secondary" caps>Websockets</Heading>
         </Slide>
@@ -111,7 +134,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={['zoom']} bgColor="secondary" textColor="primary">
           <BlockQuote>
-            <Quote textSize={'4rem'}>WebSockets are a bi-directional communication pipe built upon an upgraded http: connection.</Quote>
+            <Quote textSize={'4rem'}>A WebSocket is a bi-directional communication pipe built upon an upgraded http: connection.</Quote>
             <Cite>w/?WebSockets</Cite>
           </BlockQuote>
         </Slide>
@@ -133,6 +156,11 @@ export default class Presentation extends React.Component {
           <Heading size={6} textColor="primary" textAlign="top" caps>Client</Heading>
           <CodePane lang="js" source={codes.client} margin="20px auto" textSize="0.6em" />
         </Slide>
+        {/*
+          ****************
+          part-4: PaintApp
+          ****************
+        */}
         <Slide textColor="primary" transition={['fade']}>
           <Heading size={6} caps>PaintApp.IO</Heading>
         </Slide>
@@ -140,25 +168,26 @@ export default class Presentation extends React.Component {
           <Heading size={6} caps>Preview</Heading>
           <Link href={links.preview}>(URL)</Link>
         </Slide>
-        <Slide>
-          <Heading size={6} textAlign="right">Client</Heading>
-          <Image src={images.dependencyDiagram} width={'50%'} />
-          <Heading size={6} textAlign="left">Server</Heading>
-        </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Server</Heading>
         </Slide>
         <Slide transition={['fade']}>
           <Heading size={6} caps>Requirements</Heading>
+          <List>
+            <Appear><ListItem>Listen for incoming socket connections using a standard TCP socket</ListItem></Appear>
+            <Appear><ListItem>Listen for events emitted by connected clients</ListItem></Appear>
+            <Appear><ListItem>Emit events to connected clients</ListItem></Appear>
+            <Appear><ListItem>Graceful degradation to other transport connections</ListItem></Appear>
+          </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Dependencies</Heading>
           <List>
-            <ListItem>express</ListItem>
-            <ListItem>babel</ListItem>
-            <ListItem>socket.io</ListItem>
-            <ListItem>jest</ListItem>
-            <ListItem>eslint</ListItem>
+            <Appear><ListItem>socket.io</ListItem></Appear>
+            <Appear><ListItem>express</ListItem></Appear>
+            <Appear><ListItem>babel</ListItem></Appear>
+            <Appear><ListItem>jest</ListItem></Appear>
+            <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -173,13 +202,22 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide>
           <Heading size={6} caps>Requirements</Heading>
+          <List>
+            <Appear><ListItem>Initiate the WebSocket &quot;handshake&quot;</ListItem></Appear>
+            <Appear><ListItem>Listen for events emitted by the server</ListItem></Appear>
+            <Appear><ListItem>Emit events to the server</ListItem></Appear>
+            <Appear><ListItem>Work across multiple browsers</ListItem></Appear>
+            <Appear><ListItem>Graceful degradation to other transport connections</ListItem></Appear>
+          </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Dependencies</Heading>
           <List>
-            <ListItem>webpack</ListItem>
-            <ListItem>babel</ListItem>
-            <ListItem>socket.io/client</ListItem>
+            <Appear><ListItem>socket.io/client</ListItem></Appear>
+            <Appear><ListItem>webpack</ListItem></Appear>
+            <Appear><ListItem>babel</ListItem></Appear>
+            <Appear><ListItem>jest</ListItem></Appear>
+            <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={['fade']}>
@@ -189,6 +227,11 @@ export default class Presentation extends React.Component {
           <Heading size={6} caps>Get Started</Heading>
           <Link href={links.client}>(URL)</Link>
         </Slide>
+        {/*
+          ***********
+          part-5: fin
+          ***********
+        */}
         <Slide transition={randomSlide()} bgColor="secondary" textColor="tertiary">
           <Heading size={6} textColor="tertiary">Questions?</Heading>
         </Slide>
