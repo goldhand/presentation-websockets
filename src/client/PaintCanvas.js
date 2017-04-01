@@ -134,6 +134,7 @@ export default class PaintCanvas {
     });
 
     // TODO: Dispatch the draw event to other clients
+    this.dispatch('DRAW_POINTS', {points: [point, nextPoint], color});
   }
 
   mouseUp = () => {
