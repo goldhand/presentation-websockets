@@ -58,10 +58,16 @@ io.on('connection', socket => {
   // listen for "LOGIN" events and update user object
   let logout;
   socket.on('LOGIN', ({username}) => {
-    // map username to id
-    logout = addUser(username, socket.id);
-    // emit "UPDATE_USER_LIST" to all clients
-    io.emit('UPDATE_USER_LIST', {users});
+    // make sure username isn't already taken
+    const usernameAvailable = !Object.prototype.hasOwnProperty.call(users, username);
+    if (usernameAvailable) {
+      // map username to id
+      logout = addUser(username, socket.id);
+      // emit "UPDATE_USER_LIST" to all clients
+      io.emit('UPDATE_USER_LIST', {users});
+    } else {
+      socket.emit('USERNAME_TAKEN');
+    }
   });
 
   // listen for "disconnect" event and remove user from "users" object
