@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const config = require('../../webpack-config/development');
 // TODO: import socket.io
+const socketIO = require('socket.io');
 
 // port
 const port = 3000;
@@ -37,7 +38,14 @@ const server = app.listen(port, error => {
 });
 
 // TODO: 2. create socket server
+const io = socketIO(server);
 
 // TODO: 3. listen for new connections
+io.on('connection', socket => {
 
-// TODO: 4. listen for draw events and broadcast them to others
+  // TODO: 4. listen for draw events and broadcast them to others
+  socket.on('DRAW_POINTS', ({points, color}) => {
+    socket.broadcast.emit('DRAW_POINTS', {points, color});
+  });
+
+});

@@ -1,5 +1,6 @@
 import PaintCanvas from './PaintCanvas';
 // TODO: 1. import socket.io-client
+import io from 'socket.io-client';
 
 // initialize paint canvas
 const paintCanvas = new PaintCanvas();
@@ -21,12 +22,18 @@ controlsElem.appendChild(paintCanvas.clearButton.elem);
 
 
 // TODO: 2. create a new socket connection
+const socket = io();
 
 // subscribe to canvas events
 paintCanvas.subscribe((action, data) => {
   // TODO: 3. emit events that dispatched by paintCanvas to the server
+  socket.emit(action, {
+    ...data,
+  });
 });
 
 // listen for socket events
 // TODO: 4. listen for and handle events emitted from the server
-// socket.on('CLEAR', paintCanvas.clear);
+socket.on('DRAW_POINTS', ({points, color}) => {
+  paintCanvas.drawLine(points, color);
+});
