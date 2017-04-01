@@ -37,9 +37,14 @@ socket.on('DRAW_POINTS', ({points, color}) => {
 // client username
 const username = prompt('Enter your username');
 
-// element for displaing user list
+// Emit "LOGIN" event to server
+socket.on('connect', () => {
+  socket.emit('LOGIN', {username});
+});
+
+// listen for "UPDATE_USER_LIST" events from server and update user list display
 const usersElem = document.getElementById('users');
-
-// TODO: 1. Emit "LOGIN" event to server
-
-// TODO: 2. listen for "UPDATE_USER_LIST" events from server and update user list display
+socket.on('UPDATE_USER_LIST', ({users}) => {
+  const usernames = Object.keys(users).map(user => `<li>${user}</li>`);
+  usersElem.innerHTML = usernames.join('');
+});
