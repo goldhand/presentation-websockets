@@ -35,10 +35,16 @@ socket.on('DRAW_POINTS', ({points, color}) => {
 });
 
 // client username
-const username = prompt('Enter your username');
+let username = prompt('Enter your username');
 
 // Emit "LOGIN" event to server
 socket.on('connect', () => {
+  socket.emit('LOGIN', {username});
+});
+
+// If username is taken, prompt for another username
+socket.on('USERNAME_TAKEN', () => {
+  username = prompt(`Username ${username} taken, enter another username`);
   socket.emit('LOGIN', {username});
 });
 
