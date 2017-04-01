@@ -1,5 +1,4 @@
 import PaintCanvas from './PaintCanvas';
-// TODO: 1. import socket.io-client
 import io from 'socket.io-client';
 
 // initialize paint canvas
@@ -21,19 +20,26 @@ controlsElem.appendChild(paintCanvas.colorSelector.elem);
 controlsElem.appendChild(paintCanvas.clearButton.elem);
 
 
-// TODO: 2. create a new socket connection
 const socket = io();
 
 // subscribe to canvas events
 paintCanvas.subscribe((action, data) => {
-  // TODO: 3. emit events that dispatched by paintCanvas to the server
   socket.emit(action, {
     ...data,
   });
 });
 
-// listen for socket events
-// TODO: 4. listen for and handle events emitted from the server
+// listen for socket "DRAW_POINTS" events and draw the line
 socket.on('DRAW_POINTS', ({points, color}) => {
   paintCanvas.drawLine(points, color);
 });
+
+// client username
+const username = prompt('Enter your username');
+
+// element for displaing user list
+const usersElem = document.getElementById('users');
+
+// TODO: 1. Emit "LOGIN" event to server
+
+// TODO: 2. listen for "UPDATE_USER_LIST" events from server and update user list display
