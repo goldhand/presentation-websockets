@@ -55,13 +55,21 @@ const addUser = (username, id) => {
 };
 
 io.on('connection', socket => {
-  // TODO: 1. listen for "LOGIN" events and update user object
+  // listen for "LOGIN" events and update user object
+  let logout;
+  socket.on('LOGIN', ({username}) => {
+    // map username to id
+    logout = addUser(username, socket.id);
+    // emit "UPDATE_USER_LIST" to all clients
+    io.emit('UPDATE_USER_LIST', {users});
+  });
 
-  // TODO: 2. emit "UPDATE_USER_LIST" to all clients
-
-  // TODO: 3. listen for "disconnect" event and remove user from "users" object
-
-  // TODO: 4. emit "UPDATE_USER_LIST" after user is removed from "users" object
+  // listen for "disconnect" event and remove user from "users" object
+  socket.on('disconnect', () => {
+    if (typeof logout === 'function') logout();
+    // emit "UPDATE_USER_LIST" after user is removed from "users" object
+    io.emit('UPDATE_USER_LIST', {users});
+  });
 
   socket.on('DRAW_POINTS', ({points, color}) => {
     socket.broadcast.emit('DRAW_POINTS', {points, color});
