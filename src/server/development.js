@@ -3,7 +3,6 @@ const Express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const config = require('../../webpack-config/development');
-// TODO: import socket.io
 const socketIO = require('socket.io');
 
 // port
@@ -37,13 +36,33 @@ const server = app.listen(port, error => {
   }
 });
 
-// TODO: 2. create socket server
 const io = socketIO(server);
 
-// TODO: 3. listen for new connections
-io.on('connection', socket => {
+// fake "users" database
+const users = {};
 
-  // TODO: 4. listen for draw events and broadcast them to others
+/**
+ * adds {username: id} to the users object
+ * @param {string} username - username
+ * @param {string} id - socket.id
+ * @returns {function} removeUser - removeUser() function removes user from "users"
+ */
+const addUser = (username, id) => {
+  users[username] = id;
+  return () => {
+    delete users[username];
+  };
+};
+
+io.on('connection', socket => {
+  // TODO: 1. listen for "LOGIN" events and update user object
+
+  // TODO: 2. emit "UPDATE_USER_LIST" to all clients
+
+  // TODO: 3. listen for "disconnect" event and remove user from "users" object
+
+  // TODO: 4. emit "UPDATE_USER_LIST" after user is removed from "users" object
+
   socket.on('DRAW_POINTS', ({points, color}) => {
     socket.broadcast.emit('DRAW_POINTS', {points, color});
   });
