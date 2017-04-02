@@ -77,9 +77,13 @@ io.on('connection', socket => {
     io.emit('UPDATE_USER_LIST', {users});
   });
 
-  socket.on('DRAW_POINTS', ({points, color}) => {
-    // TODO: 1. if "toUser", emit even only to that user
-    socket.broadcast.emit('DRAW_POINTS', {points, color});
+  socket.on('DRAW_POINTS', ({points, color, toUser}) => {
+    if (toUser) {
+      socket.broadcast.to(users[toUser]).emit('DRAW_POINTS', {points, color});
+    } else {
+      // if "toUser", emit even only to that user
+      socket.broadcast.emit('DRAW_POINTS', {points, color});
+    }
   });
 
 });
