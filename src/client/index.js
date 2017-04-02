@@ -1,4 +1,5 @@
 import PaintCanvas from './PaintCanvas';
+import Button from './Button';
 import io from 'socket.io-client';
 
 // initialize paint canvas
@@ -51,6 +52,10 @@ socket.on('USERNAME_TAKEN', () => {
 // listen for "UPDATE_USER_LIST" events from server and update user list display
 const usersElem = document.getElementById('users');
 socket.on('UPDATE_USER_LIST', ({users}) => {
+  // TODO: 1. create buttons for users, when clicked, only dispatch events to that user
+  // *hint: two new methods are available on the paintCanvas instance:
+  // paintCanvas.createUserButton(username)
+  // paintCanvas.createAllButton()
   const usernames = Object.keys(users).map(user => `<li>${user}</li>`);
   usersElem.innerHTML = usernames.join('');
 });
