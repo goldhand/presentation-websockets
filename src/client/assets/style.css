@@ -25,6 +25,9 @@ body {
 .Button {
   padding: 5px 10px;
 }
+.Button.active {
+  border-color: red;
+}
 .ColorSelector {
   vertical-align: top;
 }
