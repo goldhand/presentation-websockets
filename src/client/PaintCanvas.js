@@ -29,10 +29,12 @@ export default class PaintCanvas {
     this.clearButton = clearButton;
     this.removeClearListener = removeClearListener;
     this.listeners = [];
+    this.userButtons = [];
     this.state = {
       point: 0,
       color: '#000000',
       points: [],
+      toUser: null,
     };
   }
 
@@ -112,6 +114,29 @@ export default class PaintCanvas {
     return {clearButton, removeClearListener};
   }
 
+  handleUserClick = e => {
+    const toUser = e.target.dataset.user;
+    this.userButtons.forEach(btn => btn.elem.classList.remove('active'));
+    e.target.classList.add('active');
+    this.setState({
+      toUser,
+    });
+  }
+
+  createUserButton = username => {
+    const userButton = new Button({text: username, data: {user: username}});
+    userButton.addEventListener('click', this.handleUserClick);
+    this.userButtons.push(userButton);
+    return userButton;
+  }
+
+  createAllButton = () => {
+    const allButton = new Button({text: 'All'});
+    allButton.addEventListener('click', this.handleUserClick);
+    this.userButtons.push(allButton);
+    return allButton;
+  }
+
   drawLine = (points, color) => {
     Object.freeze(points);
     const mutablePoints = [...points];
@@ -125,15 +150,16 @@ export default class PaintCanvas {
 
   mouseMove = e => {
     if (!this.mouse.down) return;
-    const {point, color} = this.state;
+    const {point, color, toUser} = this.state;
     const nextPoint = {x: e.clientX, y: e.clientY};
-    if (point) this.drawLine([point, nextPoint], color);
+    const points = [point, nextPoint];
+    if (point) this.drawLine(points, color);
     this.setState({
       point: nextPoint,
-      points: [point, nextPoint],
+      points,
     });
 
-    this.dispatch('DRAW_POINTS', {points: [point, nextPoint], color});
+    this.dispatch('DRAW_POINTS', {points, color, toUser});
   }
 
   mouseUp = () => {

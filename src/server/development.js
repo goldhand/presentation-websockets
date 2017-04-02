@@ -78,6 +78,7 @@ io.on('connection', socket => {
   });
 
   socket.on('DRAW_POINTS', ({points, color}) => {
+    // TODO: 1. if "toUser", emit even only to that user
     socket.broadcast.emit('DRAW_POINTS', {points, color});
   });
 
