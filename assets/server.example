@@ -5,7 +5,7 @@ const io = require('socket.io').listen(3000);
 const users = {};
 
 // When a client connects
-io.sockets.on('connection', socket => {
+io.on('connection', socket => {
   // Listen for the LOGIN event
   socket.on('LOGIN', data => {
     // map username to id

@@ -16,8 +16,11 @@ import {
   Text,
   Image,
   CodePane,
-  ComponentPlayground,
+  Code,
 } from 'spectacle';
+
+// Special code slide
+import CodeSlide from 'spectacle-code-slide';
 
 // Import image preloader util
 import preloader from 'spectacle/lib/utils/preloader';
@@ -33,8 +36,8 @@ import randomSlide from './randomSlide';
 
 const links = {
   preview: '#',  // TODO: deploy demo
-  server: '#',  // TODO: set up git tags for starting point
-  client: '#',  // TODO: set up git tags for starting point
+  start: 'https://github.com/goldhand/presentation-websockets/tree/start',
+  step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
 };
 
 const images = {
@@ -46,6 +49,11 @@ preloader(images);
 const codes = {
   server: require("raw-loader!../assets/server.example"),
   client: require("raw-loader!../assets/client.example"),
+  step1: {
+    index: require("raw-loader!../assets/step-1/index.example"),
+    PaintCanvas: require("raw-loader!../assets/step-1/PaintCanvas.example"),
+    development: require("raw-loader!../assets/step-1/development.example"),
+  },
 };
 
 const theme = createTheme({
@@ -57,6 +65,15 @@ const theme = createTheme({
   primary: 'Montserrat',
   secondary: 'Helvetica',
 });
+
+const stepLinkStyles = {padding: '20px', margin: '30px 0', border: '6px dashed #CECECE'};
+
+const StepLink = ({
+  link,
+}) =>
+  <div style={stepLinkStyles}>
+    <Link href={link}>{link}</Link>
+  </div>;
 
 export default class Presentation extends React.Component {
   render() {
@@ -101,20 +118,57 @@ export default class Presentation extends React.Component {
           <Heading size={6} textColor="secondary" caps>NodeJS @ Amzn</Heading>
         </Slide>
         <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
-          <Heading size={3} textColor="secondary" textAlign="left">Challenges</Heading>
+          <Heading size={4} textColor="secondary" textAlign="left">Challenges</Heading>
           <Appear>
             <List>
               <ListItem>Building (apollo)</ListItem>
               <ListItem>Packages (brazil)</ListItem>
             </List>
           </Appear>
-          <Heading size={3} textColor="secondary" textAlign="left">NodeJS Things</Heading>
+          <Heading size={4} textColor="secondary" textAlign="left">NodeJS Things</Heading>
           <Appear>
             <List>
               <ListItem>Server / Client</ListItem>
               <ListItem>App / Package</ListItem>
             </List>
           </Appear>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} textColor="secondary" caps>Super Simple Node Package</Heading>
+          <div style={{padding: '10px', maxWidth: '400px', display: 'inline-block', textAlign: 'center'}}>
+            <CodePane
+              textSize={'1em'}
+              source={`
+package-name/
+├── index.js
+└── package.json
+          `} />
+          </div>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6}>package.json</Heading>
+          <CodePane
+            lang="json"
+            textSize={'1em'}
+            source={`
+{
+  "name": "package-name",
+  "version": "1.0.0",
+  "main": "index.js"
+}
+          `} />
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6}>index.js</Heading>
+          <CodePane
+            lang="javascript"
+            textSize={'1em'}
+            source={`
+function foo(bar) {
+  return bar;
+}
+module.exports = foo;
+          `} />
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} textAlign="right">Client</Heading>
@@ -190,13 +244,6 @@ export default class Presentation extends React.Component {
             <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
-        <Slide transition={randomSlide()}>
-          <Heading size={6} caps>Architecture</Heading>
-        </Slide>
-        <Slide transition={['fade']}>
-          <Heading size={6} caps>Get Started</Heading>
-          <Link href={links.server}>(URL)</Link>
-        </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Client</Heading>
         </Slide>
@@ -220,12 +267,83 @@ export default class Presentation extends React.Component {
             <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
-        <Slide transition={['fade']}>
-          <Heading size={6} caps>Architecture</Heading>
-        </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Get Started</Heading>
-          <Link href={links.client}>(URL)</Link>
+        </Slide>
+        <Slide transition={['fade']}>
+          <Heading size={6} caps>Step 1</Heading>
+          <Text size={6}>Use socket.io to connect make this application collaborative</Text>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} caps>Client</Heading>
+          <Code textAlign="left">src/client/PaintCanvas.js</Code>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>Dispatch the draw event to listeners</ListItem></Appear>
+          </List>
+          <Code textAlign="left">src/client/index.js</Code>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>import socket.io-client</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>create a new socket connection</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>emit events that dispatched by paintCanvas to the server</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for and handle events emitted from the server</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} caps>Server</Heading>
+          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>import socket.io</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>attach socket to server</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for new connections</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for draw events and broadcast them to others</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={3} textColor="primary">Get Started!</Heading>
+          <Text size={6} textColor="primary">Step 1: Use socket.io to connect make this application collaborative</Text>
+          <StepLink link={links.start} />
+        </Slide>
+        <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
+          <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
+          <Text size={6} textColor="tertiary">Use socket.io to connect make this application collaborative</Text>
+        </Slide>
+        <CodeSlide
+          lang="javascript"
+          code={codes.step1.PaintCanvas}
+          transition={['']}
+          ranges={[
+            {loc: [0, 166], title: 'src/client/PaintCanvas.js'},
+            {loc: [135, 136], note: '1. Dispatch the draw event to listeners'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.step1.index}
+          transition={['']}
+          ranges={[
+            {loc: [0, 35], title: 'src/client/index.js'},
+            {loc: [1, 2], note: '1. import socket.io-client'},
+            {loc: [22, 23], note: '2. create a new socket connection'},
+            {loc: [26, 29], note: '3. emit events that dispatched by paintCanvas to the server'},
+            {loc: [32, 35], note: '4. listen for and handle events emitted from the server'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.step1.development}
+          transition={['']}
+          ranges={[
+            {loc: [0, 50], title: 'src/server/development.js'},
+            {loc: [5, 6], note: '1. import socket.io'},
+            {loc: [39, 40], note: '2. attach socket to server'},
+            {loc: [42, 43], note: '3. listen for new connections'},
+            {loc: [45, 48], note: '4. listen for draw events and broadcast them to others'},
+          ]}
+        />
+        <Slide transition={['fade']}>
+          <Heading size={6} caps>Step 2</Heading>
+          <Text size={6}>Add users</Text>
+          <StepLink link={links.step2} />
         </Slide>
         {/*
           ***********
