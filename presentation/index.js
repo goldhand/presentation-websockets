@@ -270,6 +270,11 @@ module.exports = foo;
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Get Started</Heading>
         </Slide>
+        {/*
+          ****************
+          part-4-1: step 1
+          ****************
+        */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 1</Heading>
           <Text size={6}>Use socket.io to connect make this application collaborative</Text>
@@ -340,10 +345,25 @@ module.exports = foo;
             {loc: [45, 48], note: '4. listen for draw events and broadcast them to others'},
           ]}
         />
+        {/*
+          ****************
+          part-4-2: step 2
+          ****************
+        */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 2</Heading>
           <Text size={6}>Add users</Text>
           <StepLink link={links.step2} />
+        </Slide>
+        {/*
+          ****************
+          part-4-3: step 3
+          ****************
+        */}
+        <Slide transition={['fade']}>
+          <Heading size={6} caps>Step 3</Heading>
+          <Text size={6}></Text>
+          <StepLink link={links.step3} />
         </Slide>
         {/*
           ***********
