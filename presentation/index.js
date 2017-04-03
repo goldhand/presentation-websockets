@@ -38,6 +38,7 @@ const links = {
   preview: '#',  // TODO: deploy demo
   start: 'https://github.com/goldhand/presentation-websockets/tree/start',
   step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
+  step3: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
 };
 
 const images = {
@@ -54,6 +55,11 @@ const codes = {
     PaintCanvas: require("raw-loader!../assets/step-1/PaintCanvas.example"),
     development: require("raw-loader!../assets/step-1/development.example"),
   },
+  step2: {
+    index: require("raw-loader!../assets/step-2/index.example"),
+    development: require("raw-loader!../assets/step-2/development.example"),
+    developmentBonus: require("raw-loader!../assets/step-2/development-bonus.example"),
+  }
 };
 
 const theme = createTheme({
@@ -325,6 +331,7 @@ module.exports = foo;
           lang="javascript"
           code={codes.step1.index}
           transition={['']}
+          textSize={'0.8em'}
           ranges={[
             {loc: [0, 35], title: 'src/client/index.js'},
             {loc: [1, 2], note: '1. import socket.io-client'},
@@ -337,6 +344,7 @@ module.exports = foo;
           lang="javascript"
           code={codes.step1.development}
           transition={['']}
+          textSize={'0.8em'}
           ranges={[
             {loc: [0, 50], title: 'src/server/development.js'},
             {loc: [5, 6], note: '1. import socket.io'},
@@ -352,9 +360,71 @@ module.exports = foo;
         */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 2</Heading>
-          <Text size={6}>Add users</Text>
+          <Text size={6}>Handle some users</Text>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Code textAlign="left">src/client/index.js</Code>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>{'Emit "LOGIN" event to server on connect'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for "UPDATE_USER_LIST" events from server and update user list display'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Bonus: Listen for "USERNAME_TAKEN" and prompt for another username'}</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} caps>Server</Heading>
+          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>{'Listen for "LOGIN" events from client and update user object'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" after user is removed from users object'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Bonus: Emit "USERNAME_TAKEN" if username is already in the users object'}</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={3} textColor="primary">Get Started!</Heading>
+          <Text size={6} textColor="primary">Step 2: Handle some users</Text>
           <StepLink link={links.step2} />
         </Slide>
+        <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
+          <Heading size={3} textColor="tertiary">Step 2: Solutions</Heading>
+          <Text size={6} textColor="tertiary">Handle some users</Text>
+        </Slide>
+        <CodeSlide
+          lang="javascript"
+          code={codes.step2.index}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 56], title: 'src/client/index.js'},
+            {loc: [40, 43], note: '1. Emit "LOGIN" event to server on connect'},
+            {loc: [51, 56], note: '2. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
+            {loc: [45, 49], note: 'Bonus: Listen for "USERNAME_TAKEN" and prompt for another username'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.step2.development}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 78], title: 'src/server/development.js'},
+            {loc: [58, 65], note: '1. Listen for "LOGIN" events from client and update user object'},
+            {loc: [63, 64], note: '2. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
+            {loc: [67, 72], note: '3. Listen for "disconnect" events and remove the socket user from the users object'},
+            {loc: [70, 71], note: '4. Emit "UPDATE_USER_LIST" after user is removed from users object'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.step2.developmentBonus}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 84], title: 'Bonus'},
+            {loc: [59, 71], note: 'Emit "USERNAME_TAKEN" if username is used'},
+          ]}
+        />
         {/*
           ****************
           part-4-3: step 3
