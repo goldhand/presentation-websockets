@@ -59,6 +59,10 @@ const codes = {
     index: require("raw-loader!../assets/step-2/index.example"),
     development: require("raw-loader!../assets/step-2/development.example"),
     developmentBonus: require("raw-loader!../assets/step-2/development-bonus.example"),
+  },
+  step3: {
+    index: require("raw-loader!../assets/step-3/index.example"),
+    development: require("raw-loader!../assets/step-3/development.example"),
   }
 };
 
@@ -432,9 +436,57 @@ module.exports = foo;
         */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 3</Heading>
-          <Text size={6}></Text>
+          <Text size={6}>Write secret messages to other users</Text>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Code textAlign="left">src/client/index.js</Code>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>{'Create buttons for users, when clicked, only dispatch events to that user'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Hint: two new methods are available on the paintCanvas instance:'}
+              <List>
+                <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createUserButton(username)'}</Code></ListItem>
+                <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createAllButton()'}</Code></ListItem>
+              </List>
+            </ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Challenge: Continue from the step-2 branch, dont check into step-3'}</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide transition={randomSlide()}>
+          <Heading size={6} caps>Server</Heading>
+          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>{'Check if a "toUser" is specified and only broadcast to that user'}</ListItem></Appear>
+          </List>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={3} textColor="primary">Get Started!</Heading>
+          <Text size={6} textColor="primary">Step 3: Write secret messages to other users</Text>
           <StepLink link={links.step3} />
         </Slide>
+        <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
+          <Heading size={3} textColor="tertiary">Step 3: Solutions</Heading>
+          <Text size={6} textColor="tertiary">Write secret messages to other users</Text>
+        </Slide>
+        <CodeSlide
+          lang="javascript"
+          code={codes.step3.index}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 65], title: 'src/client/index.js'},
+            {loc: [54, 64], note: '1. Create buttons for users, when clicked, only dispatch events to that user'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.step3.development}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 89], title: 'src/server/development.js'},
+            {loc: [79, 87], note: '1. Check if a "toUser" is specified and only broadcast to that user'},
+          ]}
+        />
         {/*
           ***********
           part-5: fin
