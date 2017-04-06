@@ -33,9 +33,10 @@ require('normalize.css');
 require('spectacle/lib/themes/default/index.css');
 
 import randomSlide from './randomSlide';
+import Preview from './Preview';
 
 const links = {
-  preview: '#',  // TODO: deploy demo
+  preview: 'http://wfarley.aka.corp.amazon.com:3030',
   start: 'https://github.com/goldhand/presentation-websockets/tree/start',
   step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
   step3: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
@@ -50,6 +51,7 @@ preloader(images);
 const codes = {
   server: require("raw-loader!../assets/server.example"),
   client: require("raw-loader!../assets/client.example"),
+  emitCheatsheet: require("raw-loader!../assets/emit-cheatsheet.example"),
   step1: {
     index: require("raw-loader!../assets/step-1/index.example"),
     PaintCanvas: require("raw-loader!../assets/step-1/PaintCanvas.example"),
@@ -64,6 +66,13 @@ const codes = {
     index: require("raw-loader!../assets/step-3/index.example"),
     development: require("raw-loader!../assets/step-3/development.example"),
   }
+};
+
+const slideNotes = {
+  socket: {
+    client: '',
+    server: '',
+  },
 };
 
 const theme = createTheme({
@@ -124,7 +133,8 @@ export default class Presentation extends React.Component {
           part-2: NodeJS
           **************
         */}
-        <Slide transition={['spin']}>
+        <Slide transition={['spin']}
+          notes="Weve all seen the NodeJS @ Amazon wiki?">
           <Heading size={6} textColor="secondary" caps>NodeJS @ Amzn</Heading>
         </Slide>
         <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
@@ -212,14 +222,55 @@ module.exports = foo;
             <Cite textColor="primary">socket.io</Cite>
           </BlockQuote>
         </Slide>
-        <Slide bgColor="tertiary" transition={randomSlide()}>
+        <Slide bgColor="tertiary" transition={randomSlide()} notes={slideNotes.socket.server}>
           <Heading size={6} textColor="primary" caps>Server</Heading>
           <CodePane lang="js" source={codes.server} margin="20px auto" textSize="0.7em" />
         </Slide>
-        <Slide bgColor="tertiary" transition={['zoom']}>
+        <CodeSlide
+          lang="javascript"
+          code={codes.server}
+          transition={['']}
+          ranges={[
+            {loc: [0, 15], title: 'Server'},
+            {loc: [1, 2], note: 'Listen to port, returns default Namespace instance'},
+            {loc: [7, 8], note: 'When there is a new connection on default namespace "/"'},
+            {loc: [9, 10], note: 'Listen for "LOGIN" events from connected client'},
+          ]}
+        />
+        <Slide bgColor="tertiary" transition={['zoom']} notes={slideNotes.socket.client}>
           <Heading size={6} textColor="primary" textAlign="top" caps>Client</Heading>
           <CodePane lang="js" source={codes.client} margin="20px auto" textSize="0.6em" />
         </Slide>
+        <CodeSlide
+          lang="javascript"
+          code={codes.client}
+          transition={['']}
+          ranges={[
+            {loc: [0, 12], title: 'Client'},
+            {loc: [4, 5], note: 'Creates "Manager" returns new "Socket" instance'},
+            {loc: [9, 10], note: 'Send data to the server: socket.emit(eventName[, ...args][, ack])'},
+          ]}
+        />
+        <CodeSlide
+          lang="javascript"
+          code={codes.emitCheatsheet}
+          transition={['']}
+          textSize={'0.8em'}
+          ranges={[
+            {loc: [0, 39], title: '/docs/emit-cheatsheet/'},
+            {loc: [5, 6], note: 'sending to the client'},
+            {loc: [8, 9], note: 'sending to all clients except sender'},
+            {loc: [11, 12], note: 'sending to all clients in "game" room except sender'},
+            {loc: [14, 15], note: 'sending to all clients in "game1" and/or in "game2" room, except sender'},
+            {loc: [17, 18], note: 'sending to all clients in "game" room, including sender'},
+            {loc: [20, 21], note: 'sending to all clients in namespace "myNamespace", including sender'},
+            {loc: [23, 24], note: 'sending to individual socketid (private message)'},
+            {loc: [26, 27], note: 'sending with acknowledgement'},
+            {loc: [29, 30], note: 'sending without compression'},
+            {loc: [32, 33], note: 'sending a message that might be dropped if the client is not ready to receive messages'},
+            {loc: [35, 36], note: 'sending to all clients on this node (when using multiple nodes)'},
+          ]}
+        />
         {/*
           ****************
           part-4: PaintApp
@@ -230,7 +281,8 @@ module.exports = foo;
         </Slide>
         <Slide textColor="primary" transition={randomSlide()}>
           <Heading size={6} caps>Preview</Heading>
-          <Link href={links.preview}>(URL)</Link>
+          <Link href={links.preview}>{links.preview}</Link>
+          <Preview src={links.preview} />
         </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Server</Heading>
