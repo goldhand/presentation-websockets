@@ -26,13 +26,4 @@ function onConnect(socket){
   // sending with acknowledgement
   socket.emit('question', 'do you think so?', function (answer) {});
 
-  // sending without compression
-  socket.compress(false).emit('uncompressed', "that's rough");
-
-  // sending a message that might be dropped if the client is not ready to receive messages
-  socket.volatile.emit('maybe', 'do you really need it?');
-
-  // sending to all clients on this node (when using multiple nodes)
-  io.local.emit('hi', 'my lovely babies');
-
 };

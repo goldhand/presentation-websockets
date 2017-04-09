@@ -34,45 +34,17 @@ require('spectacle/lib/themes/default/index.css');
 
 import randomSlide from './randomSlide';
 import Preview from './Preview';
-
-const links = {
-  preview: 'http://wfarley.aka.corp.amazon.com:3030',
-  start: 'https://github.com/goldhand/presentation-websockets/tree/start',
-  step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
-  step3: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
-};
-
-const images = {
-  dependencyDiagram: require('../assets/dependency-diagram.jpg'),
-};
+import StepLink from './StepLink';
+import {links, slideNotes, codes, images} from './constants';
 
 preloader(images);
 
-const codes = {
-  server: require("raw-loader!../assets/server.example"),
-  client: require("raw-loader!../assets/client.example"),
-  emitCheatsheet: require("raw-loader!../assets/emit-cheatsheet.example"),
-  step1: {
-    index: require("raw-loader!../assets/step-1/index.example"),
-    PaintCanvas: require("raw-loader!../assets/step-1/PaintCanvas.example"),
-    development: require("raw-loader!../assets/step-1/development.example"),
-  },
-  step2: {
-    index: require("raw-loader!../assets/step-2/index.example"),
-    development: require("raw-loader!../assets/step-2/development.example"),
-    developmentBonus: require("raw-loader!../assets/step-2/development-bonus.example"),
-  },
-  step3: {
-    index: require("raw-loader!../assets/step-3/index.example"),
-    development: require("raw-loader!../assets/step-3/development.example"),
-  }
-};
-
-const slideNotes = {
-  socket: {
-    client: '',
-    server: '',
-  },
+const codeSlideDefaults = {
+  lang: 'js',
+  transition: [''],
+  transitionDuration: 0,
+  margin: 0,
+  textSize: '0.8em',
 };
 
 const theme = createTheme({
@@ -84,15 +56,6 @@ const theme = createTheme({
   primary: 'Montserrat',
   secondary: 'Helvetica',
 });
-
-const stepLinkStyles = {padding: '20px', margin: '30px 0', border: '6px dashed #CECECE'};
-
-const StepLink = ({
-  link,
-}) =>
-  <div style={stepLinkStyles}>
-    <Link href={link}>{link}</Link>
-  </div>;
 
 export default class Presentation extends React.Component {
   render() {
@@ -133,8 +96,7 @@ export default class Presentation extends React.Component {
           part-2: NodeJS
           **************
         */}
-        <Slide transition={['spin']}
-          notes="Weve all seen the NodeJS @ Amazon wiki?">
+        <Slide transition={['spin']}>
           <Heading size={6} textColor="secondary" caps>NodeJS @ Amzn</Heading>
         </Slide>
         <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
@@ -227,9 +189,8 @@ module.exports = foo;
           <CodePane lang="js" source={codes.server} margin="20px auto" textSize="0.7em" />
         </Slide>
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.server}
-          transition={['']}
           ranges={[
             {loc: [0, 15], title: 'Server'},
             {loc: [1, 2], note: 'Listen to port, returns default Namespace instance'},
@@ -242,9 +203,8 @@ module.exports = foo;
           <CodePane lang="js" source={codes.client} margin="20px auto" textSize="0.6em" />
         </Slide>
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.client}
-          transition={['']}
           ranges={[
             {loc: [0, 12], title: 'Client'},
             {loc: [4, 5], note: 'Creates "Manager" returns new "Socket" instance'},
@@ -252,12 +212,10 @@ module.exports = foo;
           ]}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.emitCheatsheet}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
-            {loc: [0, 39], title: '/docs/emit-cheatsheet/'},
+            {loc: [0, 30], title: '/docs/emit-cheatsheet/'},
             {loc: [5, 6], note: 'sending to the client'},
             {loc: [8, 9], note: 'sending to all clients except sender'},
             {loc: [11, 12], note: 'sending to all clients in "game" room except sender'},
@@ -266,10 +224,8 @@ module.exports = foo;
             {loc: [20, 21], note: 'sending to all clients in namespace "myNamespace", including sender'},
             {loc: [23, 24], note: 'sending to individual socketid (private message)'},
             {loc: [26, 27], note: 'sending with acknowledgement'},
-            {loc: [29, 30], note: 'sending without compression'},
-            {loc: [32, 33], note: 'sending a message that might be dropped if the client is not ready to receive messages'},
-            {loc: [35, 36], note: 'sending to all clients on this node (when using multiple nodes)'},
           ]}
+          notes={slideNotes.emitCheatsheet}
         />
         {/*
           ****************
@@ -375,19 +331,16 @@ module.exports = foo;
           <Text size={6} textColor="tertiary">Use socket.io to connect make this application collaborative</Text>
         </Slide>
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step1.PaintCanvas}
-          transition={['']}
           ranges={[
             {loc: [0, 166], title: 'src/client/PaintCanvas.js'},
             {loc: [135, 136], note: '1. Dispatch the draw event to listeners'},
           ]}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step1.index}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 35], title: 'src/client/index.js'},
             {loc: [1, 2], note: '1. import socket.io-client'},
@@ -397,10 +350,8 @@ module.exports = foo;
           ]}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step1.development}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 50], title: 'src/server/development.js'},
             {loc: [5, 6], note: '1. import socket.io'},
@@ -416,14 +367,14 @@ module.exports = foo;
         */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 2</Heading>
-          <Text size={6}>Handle some users</Text>
+          <Text size={6}>Users</Text>
         </Slide>
         <Slide transition={randomSlide()}>
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Emit "LOGIN" event to server on connect'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Listen for "UPDATE_USER_LIST" events from server and update user list display'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Bonus: Listen for "USERNAME_TAKEN" and prompt for another username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Bonus: Prevent users from using an existing username'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -434,35 +385,32 @@ module.exports = foo;
             <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" after user is removed from users object'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Bonus: Emit "USERNAME_TAKEN" if username is already in the users object'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Bonus: Prevent users from using an existing username'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
-          <Text size={6} textColor="primary">Step 2: Handle some users</Text>
+          <Text size={6} textColor="primary">Step 2: Users</Text>
           <StepLink link={links.step2} />
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 2: Solutions</Heading>
-          <Text size={6} textColor="tertiary">Handle some users</Text>
+          <Text size={6} textColor="tertiary">Users</Text>
         </Slide>
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step2.index}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 56], title: 'src/client/index.js'},
             {loc: [40, 43], note: '1. Emit "LOGIN" event to server on connect'},
             {loc: [51, 56], note: '2. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
             {loc: [45, 49], note: 'Bonus: Listen for "USERNAME_TAKEN" and prompt for another username'},
           ]}
+          notes={slideNotes.step2.bonus}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step2.development}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 78], title: 'src/server/development.js'},
             {loc: [58, 65], note: '1. Listen for "LOGIN" events from client and update user object'},
@@ -472,14 +420,13 @@ module.exports = foo;
           ]}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step2.developmentBonus}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 84], title: 'Bonus'},
             {loc: [59, 71], note: 'Emit "USERNAME_TAKEN" if username is used'},
           ]}
+          notes={slideNotes.step2.bonus}
         />
         {/*
           ****************
@@ -500,7 +447,7 @@ module.exports = foo;
                 <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createAllButton()'}</Code></ListItem>
               </List>
             </ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Challenge: Continue from the step-2 branch, dont check into step-3'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Challenge: Continue from the step-2 branch, dont check into step-3 (createUserButton, createAllButton are not available)'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -520,20 +467,16 @@ module.exports = foo;
           <Text size={6} textColor="tertiary">Write secret messages to other users</Text>
         </Slide>
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step3.index}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 65], title: 'src/client/index.js'},
             {loc: [54, 64], note: '1. Create buttons for users, when clicked, only dispatch events to that user'},
           ]}
         />
         <CodeSlide
-          lang="javascript"
+          {...codeSlideDefaults}
           code={codes.step3.development}
-          transition={['']}
-          textSize={'0.8em'}
           ranges={[
             {loc: [0, 89], title: 'src/server/development.js'},
             {loc: [79, 87], note: '1. Check if a "toUser" is specified and only broadcast to that user'},
