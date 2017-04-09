@@ -1,6 +1,7 @@
 
 export const links = {
   preview: 'http://wfarley.aka.corp.amazon.com:3030',
+  heroku: 'https://pacific-shelf-23698.herokuapp.com/',
   start: 'https://github.com/goldhand/presentation-websockets/tree/start',
   step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
   step3: 'https://github.com/goldhand/presentation-websockets/tree/step-3',

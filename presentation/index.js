@@ -237,8 +237,10 @@ module.exports = foo;
         </Slide>
         <Slide textColor="primary" transition={randomSlide()}>
           <Heading size={6} caps>Preview</Heading>
-          <Link href={links.preview}>{links.preview}</Link>
-          <Preview src={links.preview} />
+          <Link href={links.heroku}>{links.heroku}</Link>
+          <br />
+          <Link href={links.preview}>Backup: {links.preview}</Link>
+          <Preview src={links.heroku} />
         </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Server</Heading>
