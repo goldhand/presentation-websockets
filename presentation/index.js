@@ -68,7 +68,7 @@ export default class Presentation extends React.Component {
         */}
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Websockets @AMZN
+            Websockets @ AMZN
           </Heading>
           <Heading size={6} caps lineHeight={3} textColor="tertiary">
             By Will Farley
@@ -84,12 +84,10 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={['fade']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Summary</Heading>
-          <Heading size={2} textColor="secondary">NodeJS @ Amzn</Heading>
+          <Heading size={3} textColor="secondary">NodeJS @ Amzn</Heading>
           <Heading size={3} textColor="secondary">Websockets</Heading>
-          <Heading size={4} textColor="secondary">PaintApp.IO</Heading>
-          <Heading size={5} textColor="secondary">Server</Heading>
-          <Heading size={6} textColor="secondary">Client</Heading>
-          <Text size={6} textColor="secondary">Questions</Text>
+          <Heading size={3} textColor="secondary">PaintApp.IO</Heading>
+          <Heading size={3} textColor="secondary">Questions</Heading>
         </Slide>
         {/*
           **************
@@ -151,11 +149,6 @@ function foo(bar) {
 }
 module.exports = foo;
           `} />
-        </Slide>
-        <Slide transition={randomSlide()}>
-          <Heading size={6} textAlign="right">Client</Heading>
-          <Image src={images.dependencyDiagram} width={'50%'} />
-          <Heading size={6} textAlign="left">Server</Heading>
         </Slide>
         {/*
           ******************
@@ -260,8 +253,6 @@ module.exports = foo;
             <Appear><ListItem>socket.io</ListItem></Appear>
             <Appear><ListItem>express</ListItem></Appear>
             <Appear><ListItem>babel</ListItem></Appear>
-            <Appear><ListItem>jest</ListItem></Appear>
-            <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={['zoom']}>
@@ -283,8 +274,6 @@ module.exports = foo;
             <Appear><ListItem>socket.io/client</ListItem></Appear>
             <Appear><ListItem>webpack</ListItem></Appear>
             <Appear><ListItem>babel</ListItem></Appear>
-            <Appear><ListItem>jest</ListItem></Appear>
-            <Appear><ListItem>eslint</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={['zoom']}>
@@ -297,7 +286,7 @@ module.exports = foo;
         */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 1</Heading>
-          <Text size={6}>Use socket.io to connect make this application collaborative</Text>
+          <Text size={6}>Make the paint application collaborative using socket.io</Text>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Client</Heading>
@@ -325,12 +314,12 @@ module.exports = foo;
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
-          <Text size={6} textColor="primary">Step 1: Use socket.io to connect make this application collaborative</Text>
+          <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
           <StepLink link={links.start} />
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
-          <Text size={6} textColor="tertiary">Use socket.io to connect make this application collaborative</Text>
+          <Text size={6} textColor="tertiary">Make the paint application collaborative using socket.io</Text>
         </Slide>
         <CodeSlide
           {...codeSlideDefaults}
@@ -497,7 +486,7 @@ module.exports = foo;
         </Slide>
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Websockets @AMZN
+            Websockets @ AMZN
           </Heading>
           <Heading size={6} caps lineHeight={3} textColor="secondary">
             By Will Farley
