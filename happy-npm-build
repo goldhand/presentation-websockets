@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source ./env
+
+task="$1"
+
+export NODE_ENV="production"
+echo "Using NodeJS $(node -v) from $(which node)"
+
+if [[ -z "$task" ]]; then
+  npm run release
+  exit 0;
+fi
+
+npm run "$@" || exit 1

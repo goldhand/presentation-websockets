@@ -1,0 +1,73 @@
+# -*-perl-*-
+
+package.PaintAppIO = {
+    interfaces = (1.0);
+
+    deploy = {
+        generic = true;
+    };
+
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    build-system = happy-npm-shrinkwrap;
+    build-tools = {
+        1.0 = {
+            HappyNpmShrinkwrap = 1.0;
+            NodeJS = 6.x;
+        };
+    };
+
+    # Use runtime-dependencies for when you want to bring in additional
+    # packages when deploying.
+    # Use dependencies instead if you intend for these dependencies to
+    # be exported to other packages that build against you.
+    dependencies = {
+        1.0 = {
+            NodeJS-ApolloEnvironmentInfo = 1.0;
+            NodeJS-express = 4.15.x;
+            NodeJS-socket_io = 1.7.x;
+        };
+    };
+
+    runtime-dependencies = {
+        1.0 = {
+            NodeJS = 6.x;
+            MinimalProcessManager = 1.1;
+        };
+    };
+
+    test-dependencies = {
+        1.0 = {
+            NodeJS-socket_io-client = 1.7.x;
+            NodeJS-babel-jest = 17.0.x;
+            NodeJS-jest-cli = 17.0.x;
+            NodeJS-fs-extra = 2.0.x;
+            NodeJS-babel-core = 6.22.x;
+            NodeJS-babel-cli = 6.22.x;
+            NodeJS-babel-loader = 6.2.x;
+            NodeJS-babel-preset-es2015 = 6.22.x;
+            NodeJS-babel-preset-stage-0 = 6.22.x;
+            NodeJS-webpack = 2.1.x;
+            NodeJS-webpack-dev-middleware = 1.10.x;
+            NodeJS-brazil-ws = 1.2;
+            NodeJS-brazil-path = 1.2;
+            NodeJS-html-loader = 0.4.x;
+            NodeJS-html-webpack-plugin = 2.26.x;
+            NodeJS-cuid = 1.3.x;
+            NodeJS-style-loader = 0.14.x;
+            NodeJS-css-loader = 0.27.x;
+        };
+    };
+
+    resolves-conflict-dependencies = {
+        1.0 = {
+            NodeJS = 6.x;
+            NodeJS-debug = 2.6.x;
+            Openssl = 1.0.x;
+        };
+    };
+
+};

@@ -1,0 +1,1 @@
+#!/apollo/sbin/envroot "$ENVROOT/bin/node" "$ENVROOT/lib/shrinkwrap/node_modules/paint-app-io/lib/server/production.js"

@@ -1,0 +1,3 @@
+RUNTIMEFARM="$(brazil-path testrun.runtimefarm)"
+export APOLLO_ENVIRONMENT_ROOT="$RUNTIMEFARM"
+export PATH="$PATH:$RUNTIMEFARM/bin"
