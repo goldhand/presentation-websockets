@@ -16,8 +16,17 @@ body {
   left: 0;
   padding: 10px;
 }
+#users {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+}
 .Button {
   padding: 5px 10px;
+}
+.Button.active {
+  border-color: red;
 }
 .ColorSelector {
   vertical-align: top;

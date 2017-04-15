@@ -5,13 +5,20 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 
 module.exports = {
   devtool: 'inline-source-map',
-  entry: path.resolve(PROJECT_ROOT, 'src/client/index'),
+  entry: [
+    'babel-polyfill',
+    path.resolve(PROJECT_ROOT, 'src/client/index'),
+    path.resolve(PROJECT_ROOT, './src/client/assets/style.css'),
+  ],
   module: {
     loaders: [{
       exclude: /node_modules/,
       include: [PROJECT_ROOT],
       loaders: ['babel-loader'],
       test: /\.js$/,
+    }, {
+      test: /\.css$/,
+      loaders: ['style-loader', 'css-loader'],
     }],
   },
   output: {
