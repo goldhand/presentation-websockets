@@ -84,10 +84,10 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={['fade']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Summary</Heading>
-          <Heading size={3} textColor="secondary">NodeJS @ Amzn</Heading>
-          <Heading size={3} textColor="secondary">Websockets</Heading>
-          <Heading size={3} textColor="secondary">PaintApp.IO</Heading>
-          <Heading size={3} textColor="secondary">Questions</Heading>
+          <Heading size={3} textColor="secondary">1. NodeJS</Heading>
+          <Heading size={3} textColor="secondary">2. Websockets</Heading>
+          <Heading size={3} textColor="secondary">3. PaintApp.IO</Heading>
+          <Heading size={3} textColor="secondary">4. Questions</Heading>
         </Slide>
         {/*
           **************
@@ -95,23 +95,7 @@ export default class Presentation extends React.Component {
           **************
         */}
         <Slide transition={['spin']}>
-          <Heading size={6} textColor="secondary" caps>NodeJS @ Amzn</Heading>
-        </Slide>
-        <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
-          <Heading size={4} textColor="secondary" textAlign="left">Challenges</Heading>
-          <Appear>
-            <List>
-              <ListItem>Building (apollo)</ListItem>
-              <ListItem>Packages (brazil)</ListItem>
-            </List>
-          </Appear>
-          <Heading size={4} textColor="secondary" textAlign="left">NodeJS Things</Heading>
-          <Appear>
-            <List>
-              <ListItem>Server / Client</ListItem>
-              <ListItem>App / Package</ListItem>
-            </List>
-          </Appear>
+          <Heading size={6} textColor="secondary" caps>NodeJS</Heading>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} textColor="secondary" caps>Super Simple Node Package</Heading>
@@ -167,6 +151,20 @@ module.exports = foo;
             <Cite>w/?WebSockets</Cite>
           </BlockQuote>
         </Slide>
+        <Slide transition={randomSlide()} bgColor="secondary" textColor="primary">
+          <Heading size={6} textColor="tertiary">The Websocket Handshake</Heading>
+        </Slide>
+        <Slide transition={randomSlide()} bgColor="secondary" textColor="primary">
+          <Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Hey server, how about you and I ditch HTTP?</Text>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">{'\'sup client, I got your header, so you want to upgrade?'}</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Yeah! Have you heard of the Websocket protocol?</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">You mean, rfc #6455? The standards proposal by the IETF and WHATWG.</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Yeah lets switch!</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">{'Ok, we\'ll just use the same TCP/IP connection and port.'}</Text></Appear>
+        </Slide>
+        <Slide transition={randomSlide()} bgColor="secondary">
+          <CodePane lang="js" source={codes.websockets} margin="20px auto" textSize="0.7em" />
+        </Slide>
         <Slide transition={['slide']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Socket.IO</Heading>
         </Slide>
@@ -201,22 +199,24 @@ module.exports = foo;
           ranges={[
             {loc: [0, 12], title: 'Client'},
             {loc: [4, 5], note: 'Creates "Manager" returns new "Socket" instance'},
+            {loc: [7, 8], note: 'When the connected to the server'},
             {loc: [9, 10], note: 'Send data to the server: socket.emit(eventName[, ...args][, ack])'},
           ]}
         />
         <CodeSlide
           {...codeSlideDefaults}
           code={codes.emitCheatsheet}
+          textSize="0.7em"
           ranges={[
             {loc: [0, 30], title: '/docs/emit-cheatsheet/'},
-            {loc: [5, 6], note: 'sending to the client'},
-            {loc: [8, 9], note: 'sending to all clients except sender'},
-            {loc: [11, 12], note: 'sending to all clients in "game" room except sender'},
-            {loc: [14, 15], note: 'sending to all clients in "game1" and/or in "game2" room, except sender'},
-            {loc: [17, 18], note: 'sending to all clients in "game" room, including sender'},
-            {loc: [20, 21], note: 'sending to all clients in namespace "myNamespace", including sender'},
-            {loc: [23, 24], note: 'sending to individual socketid (private message)'},
-            {loc: [26, 27], note: 'sending with acknowledgement'},
+            {loc: [4, 6], note: 'sending to the client'},
+            {loc: [7, 9], note: 'sending to all clients except sender'},
+            {loc: [10, 12], note: 'sending to all clients in "game" room except sender'},
+            {loc: [13, 15], note: 'sending to all clients in "game1" and/or in "game2" room, except sender'},
+            {loc: [16, 18], note: 'sending to all clients in "game" room, including sender **notice using "io" instead of "socket"'},
+            {loc: [19, 21], note: 'sending to all clients in namespace "myNamespace", including sender'},
+            {loc: [22, 24], note: 'sending to individual socketid (private message)'},
+            {loc: [25, 27], note: 'sending with acknowledgement'},
           ]}
           notes={slideNotes.emitCheatsheet}
         />
@@ -288,18 +288,21 @@ module.exports = foo;
           <Heading size={6} caps>Step 1</Heading>
           <Text size={6}>Make the paint application collaborative using socket.io</Text>
         </Slide>
-        <Slide transition={randomSlide()}>
+        <Slide
+          transition={randomSlide()}
+          notes={slideNotes.step1.client}
+        >
           <Heading size={6} caps>Client</Heading>
           <Code textAlign="left">src/client/PaintCanvas.js</Code>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>Dispatch the draw event to listeners</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Dispatch a draw event (eg "DRAW_LINE"), containing two points to draw, to listeners'}</ListItem></Appear>
           </List>
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>import socket.io-client</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>create a new socket connection</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>emit events that dispatched by paintCanvas to the server</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for and handle events emitted from the server</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for draw events from the server and use paintCanvas.drawLine to draw the points</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -308,14 +311,15 @@ module.exports = foo;
           <List ordered>
             <Appear><ListItem textSize={'1em'}>import socket.io</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>attach socket to server</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for new connections</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for draw events and broadcast them to others</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for new connections and handle them in a socket callback</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>listen for draw events from the socket and broadcast them to others sockets</ListItem></Appear>
           </List>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
           <StepLink link={links.start} />
+          <Code>git checkout start</Code>
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
@@ -360,11 +364,14 @@ module.exports = foo;
           <Heading size={6} caps>Step 2</Heading>
           <Text size={6}>Users</Text>
         </Slide>
-        <Slide transition={randomSlide()}>
+        <Slide
+          transition={randomSlide()}
+          notes={slideNotes.step2.client}
+        >
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Emit "LOGIN" event to server on connect'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Listen for "UPDATE_USER_LIST" events from server and update user list display'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit a login event (eg "LOGIN") to server on connect'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for an update user list event, (eg "UPDATE_USER_LIST") from server and update user list display'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Bonus: Prevent users from using an existing username'}</ListItem></Appear>
           </List>
         </Slide>

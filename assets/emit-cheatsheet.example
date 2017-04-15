@@ -2,28 +2,28 @@ io.on('connect', onConnect);
 
 function onConnect(socket){
 
-  // sending to the client
+  // socket.emit(<event>[, ...args])
   socket.emit('hello', 'can you hear me?', 1, 2, 'abc');
 
-  // sending to all clients except sender
+  // socket.broadcast.emit(<event[, ..args])
   socket.broadcast.emit('broadcast', 'hello friends!');
 
-  // sending to all clients in 'game' room except sender
+  // socket.to(<room>).emit(<event>[, ...args])
   socket.to('game').emit('nice game', "let's play a game");
 
-  // sending to all clients in 'game1' and/or in 'game2' room, except sender
+  // socket.to(<room1>).to(<room2>).emit(<event>[, ...args])
   socket.to('game1').to('game2').emit('nice game', "let's play a game (too)");
 
-  // sending to all clients in 'game' room, including sender
-  io.in('game').emit('big-announcement', 'the game will start soon');
+  // io.in(<room>).emit(<event>[, ...args])
+  io.in('game').emit('big-announcement', 'game will start soon');
 
-  // sending to all clients in namespace 'myNamespace', including sender
-  io.of('myNamespace').emit('bigger-announcement', 'the tournament will start soon');
+  // io.of(<namespace>).emit(<event>[, ...args])
+  io.of('myNamespace').emit('bigger-announcement', 'tournament will start');
 
-  // sending to individual socketid (private message)
+  // socket.to(<socketid>).emit(<event>[, ...args])
   socket.to(<socketid>).emit('hey', 'I just met you');
 
-  // sending with acknowledgement
-  socket.emit('question', 'do you think so?', function (answer) {});
+  // socket.emit(<event>[, ...args][, <callback>])
+  socket.emit('question', 'you think so?', function (answer) {});
 
 };

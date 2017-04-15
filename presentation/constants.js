@@ -12,6 +12,7 @@ export const images = {
 };
 
 export const codes = {
+  websockets: require('raw-loader!../assets/websockets.example'),
   server: require('raw-loader!../assets/server.example'),
   client: require('raw-loader!../assets/client.example'),
   emitCheatsheet: require('raw-loader!../assets/emit-cheatsheet.example'),
@@ -37,7 +38,11 @@ export const slideNotes = {
     server: '',
     emitCheatsheet: 'socket.emit(event, [...args][, ack])',
   },
+  step1: {
+    client: 'You can use any event name for the "draw" event, just make sure the server listens for the same name. It would be a good practice to save all your events in a "constants.js" file',
+  },
   step2: {
+    client: '',
     bonus: 'How else can you solve this? hint: use emit acknowledgement',
   },
 };
