@@ -291,6 +291,20 @@ module.exports = foo;
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Get Started</Heading>
         </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={3} textColor="primary">Setup</Heading>
+          <Text size={6} textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" or "live" versionset'}</Text>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Text size={6} textColor="primary">Local:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ git checkout start</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
+          <Text size={6} textColor="primary">Apollo:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ git checkout start-amazon</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build server</Code></Text>
+        </Slide>
         {/*
           ****************
           part-4-1: step 1
@@ -331,8 +345,7 @@ module.exports = foo;
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
           <StepLink link={links.start} actual={links.startActual} />
-          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
+          <StepLink link={links.startAmazon} actual={links.startAmazonActual} />
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
@@ -491,6 +504,11 @@ module.exports = foo;
           part-5: fin
           ***********
         */}
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={3} textColor="primary">Running this in Apollo</Heading>
+          <Text size={6} textColor="primary">Some tricks for running a node app in an Apollo environment</Text>
+          <StepLink link={links.amazonBuildExample} actual={links.amazonBuildExampleActual} />
+        </Slide>
         <Slide transition={randomSlide()} bgColor="secondary" textColor="tertiary">
           <Heading size={6} textColor="tertiary">Questions?</Heading>
         </Slide>

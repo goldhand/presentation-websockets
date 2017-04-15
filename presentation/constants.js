@@ -5,10 +5,14 @@ export const links = {
   herokuActual: 'https://pacific-shelf-23698.herokuapp.com/',
   start: 'tiny/gx00fpsj/start',
   startActual: 'https://github.com/goldhand/presentation-websockets/tree/start',
+  startAmazon: 'tiny/gx00fpsj/start-amazon',
+  startAmazonActual: 'https://github.com/goldhand/presentation-websockets/tree/start',
   step2: 'tiny/gx00fpsj/step-2',
   step2Actual: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
   step3: 'tiny/gx00fpsj/step-3',
   step3Actual: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
+  amazonBuildExample: 'tiny/gt7rga78',
+  amazonBuildExampleActual: 'https://github.com/goldhand/presentation-websockets/commit/eb0555795e4111be47a2188b0819f95b0fd77157',
 };
 
 export const images = {
