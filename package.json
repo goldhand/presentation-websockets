@@ -1,5 +1,5 @@
 {
-  "name": "presentation-websockets",
+  "name": "paint-app-io",
   "version": "1.0.0",
   "description": "Demo PaintApp.IO",
   "main": "index.js",
@@ -16,13 +16,22 @@
     "css-loader": "^0.28.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.28.0",
-    "nodemon": "^1.11.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.2",
     "webpack-dev-middleware": "^1.10.1"
   },
   "scripts": {
-    "start": "nodemon ./src/server/development.js"
+    "start": "node ./node_modules/babel-cli/bin/babel-node.js ./src/server/development.js",
+    "release": "npm run clean && npm run build && npm run shrinkwrap",
+    "build": "npm run compile && node ./build-tools/build.js",
+    "server": "NODE_ENV=production node ./src/server/production.js",
+    "server:legacy": "npm run compile && node ./lib/server/production.js",
+    "compile:server": "node ./node_modules/babel-cli/bin/babel.js ./src -d ./lib --ignore './src/**/*.spec.js'",
+    "compile:client": "node ./node_modules/webpack/bin/webpack.js --env=production",
+    "compile": "npm run compile:server && npm run compile:client",
+    "clean:local": "rm -rf ./lib ./dist",
+    "clean": "npm run clean:local && node ./build-tools/clean.js",
+    "shrinkwrap": "node ./build-tools/shrinkwrap-runtime-dependencies.js"
   },
   "repository": {
     "type": "git",
