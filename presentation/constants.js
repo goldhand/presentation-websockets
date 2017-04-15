@@ -1,10 +1,14 @@
 
 export const links = {
-  preview: 'http://wfarley.aka.corp.amazon.com:3030',
-  heroku: 'https://pacific-shelf-23698.herokuapp.com/',
-  start: 'https://github.com/goldhand/presentation-websockets/tree/start',
-  step2: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
-  step3: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
+  preview: 'http://wfarley.aka.corp.amazon.com:3000',
+  heroku: 'tiny/rh321fv2',
+  herokuActual: 'https://pacific-shelf-23698.herokuapp.com/',
+  start: 'tiny/gx00fpsj/start',
+  startActual: 'https://github.com/goldhand/presentation-websockets/tree/start',
+  step2: 'tiny/gx00fpsj/step-2',
+  step2Actual: 'https://github.com/goldhand/presentation-websockets/tree/step-2',
+  step3: 'tiny/gx00fpsj/step-3',
+  step3Actual: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
 };
 
 export const images = {
@@ -24,7 +28,6 @@ export const codes = {
   step2: {
     index: require('raw-loader!../assets/step-2/index.example'),
     development: require('raw-loader!../assets/step-2/development.example'),
-    developmentBonus: require('raw-loader!../assets/step-2/development-bonus.example'),
   },
   step3: {
     index: require('raw-loader!../assets/step-3/index.example'),

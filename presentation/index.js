@@ -47,14 +47,23 @@ const codeSlideDefaults = {
   textSize: '0.8em',
 };
 
+// const theme = createTheme({
+//   primary: 'white',
+//   secondary: '#1F2022',
+//   tertiary: '#03A9FC',
+//   quartenary: '#CECECE',
+// }, {
+//   primary: 'Montserrat',
+//   secondary: 'Helvetica',
+// });
 const theme = createTheme({
   primary: 'white',
-  secondary: '#1F2022',
-  tertiary: '#03A9FC',
-  quartenary: '#CECECE',
+  secondary: '#232f3e',
+  tertiary: '#ff9900',
+  quartenary: '#f3d078',
 }, {
-  primary: 'Montserrat',
-  secondary: 'Helvetica',
+  primary: 'Arial',
+  secondary: 'Montserrat',
 });
 
 export default class Presentation extends React.Component {
@@ -152,13 +161,13 @@ module.exports = foo;
           </BlockQuote>
         </Slide>
         <Slide transition={randomSlide()} bgColor="secondary" textColor="primary">
-          <Heading size={6} textColor="tertiary">The Websocket Handshake</Heading>
+          <Heading size={6} textColor="tertiary" caps>The Websocket Handshake</Heading>
         </Slide>
         <Slide transition={randomSlide()} bgColor="secondary" textColor="primary">
           <Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Hey server, how about you and I ditch HTTP?</Text>
-          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">{'\'sup client, I got your header, so you want to upgrade?'}</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">{'\'Sup client, I got your header, so you want to upgrade?'}</Text></Appear>
           <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Yeah! Have you heard of the Websocket protocol?</Text></Appear>
-          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">You mean, rfc #6455? The standards proposal by the IETF and WHATWG.</Text></Appear>
+          <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">The one that was standardized by the IETF in RFC 6455?</Text></Appear>
           <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="primary">Yeah lets switch!</Text></Appear>
           <Appear><Text textSize={'1.2em'} lineHeight={'1.5'} textAlign="left" textColor="tertiary">{'Ok, we\'ll just use the same TCP/IP connection and port.'}</Text></Appear>
         </Slide>
@@ -230,10 +239,13 @@ module.exports = foo;
         </Slide>
         <Slide textColor="primary" transition={randomSlide()}>
           <Heading size={6} caps>Preview</Heading>
-          <Link href={links.heroku}>{links.heroku}</Link>
-          <br />
+          <Link href={links.herokuActual}>{links.heroku}</Link>
+          <Preview src={links.herokuActual} />
+        </Slide>
+        <Slide textColor="primary" transition={randomSlide()}>
+          <Heading size={6} caps>Preview Backup</Heading>
           <Link href={links.preview}>Backup: {links.preview}</Link>
-          <Preview src={links.heroku} />
+          <Preview src={links.preview} />
         </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Server</Heading>
@@ -318,8 +330,9 @@ module.exports = foo;
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
-          <StepLink link={links.start} />
-          <Code>git checkout start</Code>
+          <StepLink link={links.start} actual={links.startActual} />
+          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
@@ -371,25 +384,26 @@ module.exports = foo;
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Emit a login event (eg "LOGIN") to server on connect'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Listen for an update user list event, (eg "UPDATE_USER_LIST") from server and update user list display'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Bonus: Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for an update user list event (eg "UPDATE_USER_LIST") from server and update user list display'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
           <Text textAlign="left"><Code>src/server/development.js</Code></Text>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Listen for "LOGIN" events from client and update user object'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Emit "UPDATE_USER_LIST" after user is removed from users object'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Bonus: Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for login events (eg "LOGIN") from client and save the user using addUser(username, socket.id)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit an update user list event (eg "UPDATE_USER_LIST") to all clients when there is a login event'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object (*hint: addUser returns the logout fn)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit another update user list event after a user has been "logged out"'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 2: Users</Text>
-          <StepLink link={links.step2} />
+          <StepLink link={links.step2} actual={links.step2Actual} />
+          <Code>$ git checkout step-2</Code>
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 2: Solutions</Heading>
@@ -401,8 +415,8 @@ module.exports = foo;
           ranges={[
             {loc: [0, 56], title: 'src/client/index.js'},
             {loc: [40, 43], note: '1. Emit "LOGIN" event to server on connect'},
-            {loc: [51, 56], note: '2. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
-            {loc: [45, 49], note: 'Bonus: Listen for "USERNAME_TAKEN" and prompt for another username'},
+            {loc: [45, 49], note: '2. Listen for "USERNAME_TAKEN" and prompt for another username'},
+            {loc: [51, 56], note: '3. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
           ]}
           notes={slideNotes.step2.bonus}
         />
@@ -410,21 +424,13 @@ module.exports = foo;
           {...codeSlideDefaults}
           code={codes.step2.development}
           ranges={[
-            {loc: [0, 78], title: 'src/server/development.js'},
-            {loc: [58, 65], note: '1. Listen for "LOGIN" events from client and update user object'},
-            {loc: [63, 64], note: '2. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
-            {loc: [67, 72], note: '3. Listen for "disconnect" events and remove the socket user from the users object'},
-            {loc: [70, 71], note: '4. Emit "UPDATE_USER_LIST" after user is removed from users object'},
+            {loc: [0, 84], title: 'src/server/development.js'},
+            {loc: [58, 71], note: '1. Listen for "LOGIN" events from client and update user object'},
+            {loc: [62, 70], note: '2. Prevent users from using an existing username'},
+            {loc: [66, 67], note: '3. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
+            {loc: [73, 78], note: '4. Listen for "disconnect" events and remove the socket user from the users object'},
+            {loc: [76, 77], note: '5. Emit "UPDATE_USER_LIST" after user is removed from users object'},
           ]}
-        />
-        <CodeSlide
-          {...codeSlideDefaults}
-          code={codes.step2.developmentBonus}
-          ranges={[
-            {loc: [0, 84], title: 'Bonus'},
-            {loc: [59, 71], note: 'Emit "USERNAME_TAKEN" if username is used'},
-          ]}
-          notes={slideNotes.step2.bonus}
         />
         {/*
           ****************
@@ -439,13 +445,12 @@ module.exports = foo;
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Create buttons for users, when clicked, only dispatch events to that user'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Hint: two new methods are available on the paintCanvas instance:'}
+            <Appear><ListItem textSize={'1em'}>{'Hint: two methods are available on the paintCanvas instance to help you:'}
               <List>
                 <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createUserButton(username)'}</Code></ListItem>
                 <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createAllButton()'}</Code></ListItem>
               </List>
             </ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Challenge: Continue from the step-2 branch, dont check into step-3 (createUserButton, createAllButton are not available)'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -458,7 +463,8 @@ module.exports = foo;
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 3: Write secret messages to other users</Text>
-          <StepLink link={links.step3} />
+          <StepLink link={links.step3} actual={links.step3Actual} />
+          <Code>$ git checkout step-3</Code>
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 3: Solutions</Heading>
