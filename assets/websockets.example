@@ -6,11 +6,7 @@ connection.onopen = () => {
 };
 
 // Log errors
-connection.onerror = error => {
-  console.log('WebSocket Error ' + error);
-};
+connection.onerror = error => {...};
 
 // Log messages from the server
-connection.onmessage = e => {
-  console.log('Server: ' + e.data);
-};
+connection.onmessage = e => {...};
