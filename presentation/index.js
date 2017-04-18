@@ -161,11 +161,6 @@ export default class Presentation extends React.Component {
           <Link href={links.herokuActual}>{links.heroku}</Link>
           <Preview src={links.herokuActual} />
         </Slide>
-        <Slide textColor="primary" transition={randomSlide()}>
-          <Heading size={6} caps>Preview Backup</Heading>
-          <Link href={links.preview}>Backup: {links.preview}</Link>
-          <Preview src={links.preview} />
-        </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Client</Heading>
         </Slide>
