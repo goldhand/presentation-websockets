@@ -1,10 +1,11 @@
+// Import socket.io and open connection to the server
+const socket = require('socket.io-client')();
+
 // Get the user's username
 const username = prompt('Enter your username');
 
-// Connect to server
-const socket = require('socket.io-client')();
-
-// When connected to the server
+// When 'connect' or 'connection' is emitted,
+// a server and client have connected
 socket.on('connect', () => {
   // send username to the server
   socket.emit('LOGIN', {username});

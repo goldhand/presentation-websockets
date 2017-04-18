@@ -1,16 +1,16 @@
 var connection = new WebSocket('ws://localhost');
 
 // When the connection is open, send some data to the server
-connection.onopen = function () {
+connection.onopen = () => {
   connection.send('Ping'); // Send message 'Ping' to the server
 };
 
 // Log errors
-connection.onerror = function (error) {
+connection.onerror = error => {
   console.log('WebSocket Error ' + error);
 };
 
 // Log messages from the server
-connection.onmessage = function (e) {
+connection.onmessage = e => {
   console.log('Server: ' + e.data);
 };

@@ -1,6 +1,6 @@
 io.on('connect', onConnect);
 
-function onConnect(socket){
+const onConnect = socket => {
 
   // socket.emit(<event>[, ...args])
   socket.emit('hello', 'can you hear me?', 1, 2, 'abc');
@@ -24,6 +24,6 @@ function onConnect(socket){
   socket.to(<socketid>).emit('hey', 'I just met you');
 
   // socket.emit(<event>[, ...args][, <callback>])
-  socket.emit('question', 'you think so?', function (answer) {});
+  socket.emit('question', 'you think so?', answer => {});
 
 };

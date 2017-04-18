@@ -1,12 +1,12 @@
-// Start server on port 3000
+// Import socket.io and start server with on port 3000
 const io = require('socket.io').listen(3000);
 
 // {username : id} map
 const users = {};
 
-// When a client connects
+// When there is a new socket connection use socket callback
 io.on('connection', socket => {
-  // Listen for the LOGIN event
+  // Listen for the LOGIN event emitted from the client
   socket.on('LOGIN', data => {
     // map username to id
     users[data.username] = socket.id;

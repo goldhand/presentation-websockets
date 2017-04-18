@@ -15,10 +15,6 @@ export const links = {
   amazonBuildExampleActual: 'https://github.com/goldhand/presentation-websockets/commit/eb0555795e4111be47a2188b0819f95b0fd77157',
 };
 
-export const images = {
-  dependencyDiagram: require('../assets/dependency-diagram.jpg'),
-};
-
 export const codes = {
   websockets: require('raw-loader!../assets/websockets.example'),
   server: require('raw-loader!../assets/server.example'),
