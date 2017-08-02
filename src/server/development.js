@@ -4,6 +4,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const config = require('../../webpack-config/development');
 const onSocketConnect = require('./socket');
 // TODO 1.1: import socket.io
+const socketIO = require('socket.io');
 
 const DEFAULT_PORT = 3000;
 
@@ -36,5 +37,6 @@ const server = app.listen(port, error => {
 });
 
 // TODO 1.2: attach socket to the server instance
+const io = socketIO(server);
 // TODO 1.3: listen for new connections and handle them in the socket callback
-// io.on('connection', onSocketConnect(io));
+io.on('connection', onSocketConnect(io));
