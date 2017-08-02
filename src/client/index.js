@@ -21,7 +21,8 @@ controlsElem.appendChild(paintCanvas.colorSelector.elem);
 controlsElem.appendChild(paintCanvas.clearButton.elem);
 
 // get the client username
-let username = prompt('Enter your username');
+// TODO: uncomment me for step 2
+// let username = prompt('Enter your username');
 
 // TODO 1.2: create a new socket connection
 // subscribe to canvas events
