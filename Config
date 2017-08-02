@@ -59,6 +59,7 @@ package.PaintAppIO = {
             NodeJS-cuid = 1.3.x;
             NodeJS-style-loader = 0.14.x;
             NodeJS-css-loader = 0.27.x;
+            NodeJS-nodemon = 1.10.x;
         };
     };
 
