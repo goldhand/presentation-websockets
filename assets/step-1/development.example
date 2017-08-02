@@ -40,11 +40,4 @@ const server = app.listen(port, error => {
 const io = socketIO(server);
 
 // listen for new connections
-io.on('connection', socket => {
-
-  // listen for draw events and broadcast them to others
-  socket.on('DRAW_POINTS', ({points, color}) => {
-    socket.broadcast.emit('DRAW_POINTS', {points, color});
-  });
-
-});
+io.on('connection', onSocketConnect(io));

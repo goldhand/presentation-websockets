@@ -3,8 +3,8 @@ export const links = {
   preview: 'http://wfarley.aka.corp.amazon.com:3000',
   heroku: 'tiny/rh321fv2',
   herokuActual: 'https://pacific-shelf-23698.herokuapp.com/',
-  start: 'tiny/gx00fpsj/start',
-  startActual: 'https://github.com/goldhand/presentation-websockets/tree/start',
+  start: 'github.com/goldhand/presentation-websockets',
+  startActual: 'https://github.com/goldhand/presentation-websockets/tree/new-start',
   startAmazon: 'tiny/gx00fpsj/start-amazon',
   startAmazonActual: 'https://github.com/goldhand/presentation-websockets/tree/start',
   step2: 'tiny/gx00fpsj/step-2',
@@ -13,6 +13,8 @@ export const links = {
   step3Actual: 'https://github.com/goldhand/presentation-websockets/tree/step-3',
   amazonBuildExample: 'tiny/gt7rga78',
   amazonBuildExampleActual: 'https://github.com/goldhand/presentation-websockets/commit/eb0555795e4111be47a2188b0819f95b0fd77157',
+  solutions: 'github.com/goldhand/presentation-websockets/tree/new-solutions',
+  solutionsActual: 'https://github.com/goldhand/presentation-websockets/tree/new-solutions',
 };
 
 export const codes = {
@@ -32,6 +34,10 @@ export const codes = {
   step3: {
     index: require('raw-loader!../assets/step-3/index.example'),
     development: require('raw-loader!../assets/step-3/development.example'),
+  },
+  solutions: {
+    socket: require('raw-loader!../assets/solution.socket.example'),
+    index: require('raw-loader!../assets/solution.index.example'),
   },
 };
 

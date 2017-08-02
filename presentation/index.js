@@ -159,6 +159,8 @@ export default class Presentation extends React.Component {
         <Slide textColor="primary" transition={randomSlide()}>
           <Heading size={6} caps>Preview</Heading>
           <Link href={links.herokuActual}>{links.heroku}</Link>
+          <br />
+          <Link href={links.herokuActual}>{links.herokuActual}</Link>
           <Preview src={links.herokuActual} />
         </Slide>
         <Slide transition={['zoom']}>
@@ -204,6 +206,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Get Started</Heading>
+          <StepLink link={links.start} actual={links.startActual} />
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Setup</Heading>
@@ -211,14 +214,11 @@ export default class Presentation extends React.Component {
           <Appear><Text size={6} textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" or "live" versionset'}</Text></Appear>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Text textAlign="left"><Code textSize="0.7em">$ git clone -b new-start git@github.com:goldhand/presentation-websockets.git</Code></Text>
           <Text size={6} textColor="primary">Local:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ git checkout start</Code></Text>
           <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
           <Text size={6} textColor="primary">Apollo:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ git clone git@github.com:goldhand/presentation-websockets.git</Code></Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ git checkout start-amazon</Code></Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build server</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build build && brazil-build server</Code></Text>
         </Slide>
         {/*
           ****************
@@ -236,14 +236,18 @@ export default class Presentation extends React.Component {
           <Heading size={6} caps>Client</Heading>
           <Code textAlign="left">src/client/PaintCanvas.js</Code>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Dispatch a draw event (eg "DRAW_LINE"), containing two points to draw, to listeners'}</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>
+              {`Use the "dispatch(action: string, data: {points: Array<{x: number, y: number}>, color: string})" method to dispatch a draw 'action-type' (eg "DRAW_LINE"), containing an array of two points to draw, and a color to subscribers`}
+            </ListItem></Appear>
           </List>
           <Code textAlign="left">src/client/index.js</Code>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>import socket.io-client</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>create a new socket connection</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>emit events that dispatched by paintCanvas to the server</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for draw events from the server and use paintCanvas.drawLine to draw the points</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>import socket.io-client</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>{`create a new socket connection by invoking "socket.io-client". Convention is to name the returned socket instance "socket"`}</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>{`emit events of any 'action-type' dispatched by paintCanvas to the server using the "socket.emit(action: string, [...args])" method`}</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>
+              {`listen for draw events from the server of the draw action-type (eg "DRAW_LINE") and use the "paintCanvas.drawLine(Array<{x: number, y: number}>, color: string)" method to draw the points on the canvas.`}
+            </ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
@@ -251,16 +255,21 @@ export default class Presentation extends React.Component {
           <Text textAlign="left"><Code>src/server/development.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>import socket.io</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>attach socket to server</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>attach a socket to the express server by passing the express server instance as an argument when socket.io is invoked</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>listen for new connections and handle them in a socket callback</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for draw events from the socket and broadcast them to others sockets</ListItem></Appear>
+          </List>
+          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>
+              {`listen for draw action-type events (eg "DRAW_LINE") from the socket and broadcast them to others sockets`}
+            </ListItem></Appear>
           </List>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
-          <StepLink link={links.start} actual={links.startActual} />
-          <StepLink link={links.startAmazon} actual={links.startAmazonActual} />
+          {/* <StepLink link={links.start} actual={links.startActual} />
+          <StepLink link={links.startAmazon} actual={links.startAmazonActual} /> */}
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
@@ -289,11 +298,18 @@ export default class Presentation extends React.Component {
           {...codeSlideDefaults}
           code={codes.step1.development}
           ranges={[
-            {loc: [0, 50], title: 'src/server/development.js'},
+            {loc: [0, 43], title: 'src/server/development.js'},
             {loc: [5, 6], note: '1. import socket.io'},
             {loc: [39, 40], note: '2. attach socket to server'},
             {loc: [42, 43], note: '3. listen for new connections'},
-            {loc: [45, 48], note: '4. listen for draw events and broadcast them to others'},
+          ]}
+        />
+        <CodeSlide
+          {...codeSlideDefaults}
+          code={codes.solutions.socket}
+          ranges={[
+            {loc: [0, 55], title: 'src/server/socket.js'},
+            {loc: [19, 22], note: '1. listen for draw events and broadcast them to others'},
           ]}
         />
         {/*
@@ -310,18 +326,19 @@ export default class Presentation extends React.Component {
           notes={slideNotes.step2.client}
         >
           <Code textAlign="left">src/client/index.js</Code>
+          <Heading size={6} caps>Client</Heading>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Emit a login event (eg "LOGIN") to server on connect'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Emit a login event (eg "LOGIN") to the server when the client is connected with the selected username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username (multiple ways to do this)'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Listen for an update user list event (eg "UPDATE_USER_LIST") from server and update user list display'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
-          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Listen for login events (eg "LOGIN") from client and save the user using addUser(username, socket.id)'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username (multiple ways to do this)'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Emit an update user list event (eg "UPDATE_USER_LIST") to all clients when there is a login event'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object (*hint: addUser returns the logout fn)'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Emit another update user list event after a user has been "logged out"'}</ListItem></Appear>
@@ -330,8 +347,8 @@ export default class Presentation extends React.Component {
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 2: Users</Text>
-          <StepLink link={links.step2} actual={links.step2Actual} />
-          <Code>$ git checkout step-2</Code>
+          {/* <StepLink link={links.step2} actual={links.step2Actual} />
+          <Code>$ git checkout step-2</Code> */}
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 2: Solutions</Heading>
@@ -352,7 +369,7 @@ export default class Presentation extends React.Component {
           {...codeSlideDefaults}
           code={codes.step2.development}
           ranges={[
-            {loc: [0, 84], title: 'src/server/development.js'},
+            {loc: [0, 84], title: 'src/server/socket.js'},
             {loc: [58, 71], note: '1. Listen for "LOGIN" events from client and update user object'},
             {loc: [61, 70], note: '2. Prevent users from using an existing username'},
             {loc: [66, 67], note: '3. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
@@ -383,7 +400,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
-          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Check if a "toUser" is specified and only broadcast to that user'}</ListItem></Appear>
           </List>
@@ -391,8 +408,8 @@ export default class Presentation extends React.Component {
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 3: Write secret messages to other users</Text>
-          <StepLink link={links.step3} actual={links.step3Actual} />
-          <Code>$ git checkout step-3</Code>
+          {/* <StepLink link={links.step3} actual={links.step3Actual} />
+          <Code>$ git checkout step-3</Code> */}
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 3: Solutions</Heading>
@@ -410,7 +427,7 @@ export default class Presentation extends React.Component {
           {...codeSlideDefaults}
           code={codes.step3.development}
           ranges={[
-            {loc: [0, 89], title: 'src/server/development.js'},
+            {loc: [0, 89], title: 'src/server/socket.js'},
             {loc: [79, 87], note: '1. Check if a "toUser" is specified and only broadcast to that user'},
           ]}
         />
