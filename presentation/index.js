@@ -68,15 +68,10 @@ export default class Presentation extends React.Component {
             By Will Farley
           </Heading>
           <br />
+          <Text textColor="tertiary">@wfarley</Text>
+          <Text textColor="tertiary">github.com/goldhand</Text>
+          <br />
           <Text textColor="secondary">goldhand.github.io/presentation-websockets</Text>
-        </Slide>
-        <Slide transition={['fade']} bgColor="secondary" textColor="primary">
-          <Heading size={6} textColor="tertiary" caps>Say hi!</Heading>
-          <br />
-          <br />
-          <Text textColor="primary">github.com/goldhand</Text>
-          <br />
-          <Text textColor="primary">@wfarley</Text>
         </Slide>
         <Slide transition={['fade']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Summary</Heading>
@@ -214,7 +209,7 @@ export default class Presentation extends React.Component {
           <Appear><Text size={6} textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" or "live" versionset'}</Text></Appear>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Text textAlign="left"><Code textSize="0.7em">$ git clone -b new-start git@github.com:goldhand/presentation-websockets.git</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ git clone -b new-start https://github.com/goldhand/presentation-websockets.git</Code></Text>
           <Text size={6} textColor="primary">Local:</Text>
           <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
           <Text size={6} textColor="primary">Apollo:</Text>
@@ -446,6 +441,12 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide transition={['fade']} bgColor="tertiary" textColor="secondary">
           <Heading size={2}>fin</Heading>
+        </Slide>
+        <Slide
+          transition={["fade"]} bgColor="secondary">
+          <Heading size={1} textColor="tertiary" caps fit>Zero Time to Load</Heading>
+          <br />
+          <Text textColor="primary">5:30 pm in München 4</Text>
         </Slide>
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
