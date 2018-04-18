@@ -17,15 +17,15 @@ const addUser = (username, id) => {
 const onSocketConnect = io => socket => {
 
   // TODO 1.4: listen for draw events and broadcast them to others
-  socket.on('DRAW_LINE', ({points, color, toUser}) => {
-    socket.broadcast.emit('DRAW_LINE', {points, color});
+  socket.on('DRAW_POINTS', ({points, color, toUser}) => {
+    socket.broadcast.emit('DRAW_POINTS', {points, color});
   });
   // TODO 3.1: Check if a "toUser" is specified and only broadcast to that user
-  socket.on('DRAW_LINE', ({points, color, toUser}) => {
+  socket.on('DRAW_POINTS', ({points, color, toUser}) => {
     if (toUser) {
-      socket.broadcast.to(users[toUser]).emit('DRAW_LINE', {points, color});
+      socket.broadcast.to(users[toUser]).emit('DRAW_POINTS', {points, color});
     } else {
-      socket.broadcast.emit('DRAW_LINE', {points, color});
+      socket.broadcast.emit('DRAW_POINTS', {points, color});
     }
   });
 

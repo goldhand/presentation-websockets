@@ -1,0 +1,2 @@
+// server
+socket.to(target).emit('EVENT', data);

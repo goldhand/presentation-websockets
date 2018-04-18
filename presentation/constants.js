@@ -26,14 +26,23 @@ export const codes = {
     index: require('raw-loader!../assets/step-1/index.example'),
     PaintCanvas: require('raw-loader!../assets/step-1/PaintCanvas.example'),
     development: require('raw-loader!../assets/step-1/development.example'),
+    app: require('raw-loader!../assets/step-1/app.example'),
+    socket: require('raw-loader!../assets/step-1/socket.example'),
+    concepts: require('raw-loader!../assets/step-1/concepts.example'),
   },
   step2: {
     index: require('raw-loader!../assets/step-2/index.example'),
     development: require('raw-loader!../assets/step-2/development.example'),
+    app: require('raw-loader!../assets/step-2/app.example'),
+    socket: require('raw-loader!../assets/step-2/socket.example'),
+    concepts: require('raw-loader!../assets/step-2/concepts.example'),
   },
   step3: {
     index: require('raw-loader!../assets/step-3/index.example'),
     development: require('raw-loader!../assets/step-3/development.example'),
+    app: require('raw-loader!../assets/step-3/app.example'),
+    socket: require('raw-loader!../assets/step-3/socket.example'),
+    concepts: require('raw-loader!../assets/step-3/concepts.example'),
   },
   solutions: {
     socket: require('raw-loader!../assets/solution.socket.example'),

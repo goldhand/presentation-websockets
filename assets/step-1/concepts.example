@@ -1,0 +1,8 @@
+// client
+const socket = require('socket.io-client')();
+socket.on('EVENT', (data) => {});
+socket.emit('EVENT', data);
+
+// server
+const io = require('socket.io')(server);
+socket.broadcast.emit('EVENT', data);

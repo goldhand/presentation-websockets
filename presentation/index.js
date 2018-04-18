@@ -14,6 +14,7 @@ import {
   Quote,
   Slide,
   Text,
+  Image,
   CodePane,
   Code,
 } from 'spectacle';
@@ -62,7 +63,7 @@ export default class Presentation extends React.Component {
         */}
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Websockets @ AMZN
+            Websockets Workshop
           </Heading>
           <Heading size={6} caps lineHeight={3} textColor="tertiary">
             By Will Farley
@@ -72,6 +73,12 @@ export default class Presentation extends React.Component {
           <Text textColor="tertiary">github.com/goldhand</Text>
           <br />
           <Text textColor="secondary">goldhand.github.io/presentation-websockets</Text>
+        </Slide>
+        <Slide>
+          <Heading size={6} caps>Hi, I'm Will</Heading>
+        </Slide>
+        <Slide>
+          <Image style={{maxWidth: '100%', maxHeight: '100%'}} src={require('../assets/apluslogo_highres.png')} />
         </Slide>
         <Slide transition={['fade']} bgColor="tertiary">
           <Heading size={6} textColor="primary" caps>Summary</Heading>
@@ -199,21 +206,54 @@ export default class Presentation extends React.Component {
             <Appear><ListItem>babel</ListItem></Appear>
           </List>
         </Slide>
-        <Slide transition={['zoom']}>
-          <Heading size={6} caps>Get Started</Heading>
-          <StepLink link={links.start} actual={links.startActual} />
-        </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Setup</Heading>
-          <Appear><Text size={6} textColor="primary">{'Find a partner and decide who will be the client and who will be the server. Since you will be collaborating, you may want to fork the repo.'}</Text></Appear>
-          <Appear><Text size={6} textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" or "live" versionset'}</Text></Appear>
+          <Appear><Text size={6} textAlign="left" textColor="primary">{'Find a partner and decide who will be the client and who will be the server.'}</Text></Appear>
+          <Appear><Text size={6} textAlign="left" textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" versionset'}</Text></Appear>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Text textAlign="left"><Code textSize="0.7em">$ git clone -b new-start https://github.com/goldhand/presentation-websockets.git</Code></Text>
+          <Heading size={4} textColor="primary">"client" should fork or use</Heading>
+          <br />
           <Text size={6} textColor="primary">Local:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ npm install && npm start</Code></Text>
+          <StepLink link={'github.com/goldhand/paint-io-client'} actual={'https://github.com/goldhand/paint-io-client'} />
           <Text size={6} textColor="primary">Apollo:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build build && brazil-build server</Code></Text>
+          <StepLink link={'code.amazon.com/packages/NodeJS-paint-io-client'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-client'} />
+          <Appear><Text size={6} textColor="primary">{'"server" should clone your teammate\'s fork'}</Text></Appear>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={4} textColor="primary">"server" should fork or use</Heading>
+          <br />
+          <Text size={6} textColor="primary">Local:</Text>
+          <StepLink link={'github.com/goldhand/paint-io-server'} actual={'https://github.com/goldhand/paint-io-server'} />
+          <Text size={6} textColor="primary">Apollo:</Text>
+          <StepLink link={'code.amazon.com/packages/NodeJS-paint-io-server'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-server'} />
+          <Appear><Text size={6} textColor="primary">{'"client" should clone your teammate\'s fork'}</Text></Appear>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={4} textColor="primary">From each package directory, run:</Heading>
+          <br />
+          <Text size={6} textColor="primary">Local:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ npm install</Code></Text>
+          <Text size={6} textColor="primary">Apollo:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build release</Code></Text>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Heading size={4} textColor="primary">From the paint-io-server package, run:</Heading>
+          <br />
+          <Text size={6} textColor="primary">Local:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ npm run watch</Code></Text>
+          <Text size={6} textColor="primary">Apollo:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build watch</Code></Text>
+        </Slide>
+        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
+          <Text size={6} textAlign="left" textColor="primary">You should only need to edit one file in each package.</Text>
+          <Text size={6} textColor="primary">Client:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">./src/app.js</Code></Text>
+          <Text size={6} textColor="primary">Server:</Text>
+          <Text textAlign="left"><Code textSize="0.7em">./src/socket.js</Code></Text>
+          <br />
+          <Text size={6} textAlign="left" textColor="primary">{'Inline instructions can be found in that file. Each task is marked by as:'}</Text>
+          <Text textAlign="left"><Code textSize="0.7em">TODO x.x [description]</Code></Text>
         </Slide>
         {/*
           ****************
@@ -226,45 +266,37 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide
           transition={randomSlide()}
-          notes={slideNotes.step1.client}
         >
           <Heading size={6} caps>Client</Heading>
-          <Code textAlign="left">src/client/PaintCanvas.js</Code>
-          <List ordered>
-            <Appear><ListItem textSize={'0.7em'}>
-              {`Use the "dispatch(action: string, data: {points: Array<{x: number, y: number}>, color: string})" method to dispatch a draw 'action-type' (eg "DRAW_LINE"), containing an array of two points to draw, and a color to subscribers`}
-            </ListItem></Appear>
-          </List>
-          <Code textAlign="left">src/client/index.js</Code>
+          <Text textAlign="left"><Code>src/app.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'0.7em'}>import socket.io-client</ListItem></Appear>
             <Appear><ListItem textSize={'0.7em'}>{`create a new socket connection by invoking "socket.io-client". Convention is to name the returned socket instance "socket"`}</ListItem></Appear>
-            <Appear><ListItem textSize={'0.7em'}>{`emit events of any 'action-type' dispatched by paintCanvas to the server using the "socket.emit(action: string, [...args])" method`}</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>{`emit a "DRAW_POINTS" message to the server when paintCanvas has mouseMove events`}</ListItem></Appear>
             <Appear><ListItem textSize={'0.7em'}>
-              {`listen for draw events from the server of the draw action-type (eg "DRAW_LINE") and use the "paintCanvas.drawLine(Array<{x: number, y: number}>, color: string)" method to draw the points on the canvas.`}
+              {`listen for draw events from the server of the draw action-type (eg "DRAW_POINTS") and use the "paintCanvas.drawLine(Array<{x: number, y: number}>, color: string)" method to draw the points on the canvas.`}
             </ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
-          <Text textAlign="left"><Code>src/server/development.js</Code></Text>
+          <Text textAlign="left"><Code>src/socket.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>import socket.io</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>attach a socket to the express server by passing the express server instance as an argument when socket.io is invoked</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>listen for new connections and handle them in a socket callback</ListItem></Appear>
-          </List>
-          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
-          <List ordered>
+            <Appear><ListItem textSize={'1em'}>listen for new connections and use the provided "onSocketConnect" function</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>
-              {`listen for draw action-type events (eg "DRAW_LINE") from the socket and broadcast them to others sockets`}
+              {`listen for draw action-type events (eg "DRAW_POINTS") from the socket and broadcast them to others sockets`}
             </ListItem></Appear>
           </List>
+        </Slide>
+        <Slide bgColor="tertiary" transition={['zoom']}>
+          <Heading size={6} textColor="primary" textAlign="top" caps>Concepts</Heading>
+          <CodePane lang="js" source={codes.step1.concepts} margin="20px auto" textSize="0.6em" />
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 1: Make the paint application collaborative using socket.io</Text>
-          {/* <StepLink link={links.start} actual={links.startActual} />
-          <StepLink link={links.startAmazon} actual={links.startAmazonActual} /> */}
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 1: Solutions</Heading>
@@ -272,39 +304,24 @@ export default class Presentation extends React.Component {
         </Slide>
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step1.PaintCanvas}
+          code={codes.step1.app}
           ranges={[
-            {loc: [0, 166], title: 'src/client/PaintCanvas.js'},
-            {loc: [135, 136], note: '1. Dispatch the draw event to listeners'},
+            {loc: [0, 85], title: 'Client'},
+            {loc: [7, 8], note: '1. import socket.io-client'},
+            {loc: [9, 10], note: '2. create a new socket connection'},
+            {loc: [46, 47], note: '3. emit a "DRAW_POINTS" message to the server'},
+            {loc: [51, 54], note: '4. listen for and handle "DRAW_POINTS" events emitted from the server'},
           ]}
         />
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step1.index}
+          code={codes.step1.socket}
           ranges={[
-            {loc: [0, 35], title: 'src/client/index.js'},
-            {loc: [1, 2], note: '1. import socket.io-client'},
-            {loc: [22, 23], note: '2. create a new socket connection'},
-            {loc: [26, 29], note: '3. emit events that dispatched by paintCanvas to the server'},
-            {loc: [32, 35], note: '4. listen for and handle events emitted from the server'},
-          ]}
-        />
-        <CodeSlide
-          {...codeSlideDefaults}
-          code={codes.step1.development}
-          ranges={[
-            {loc: [0, 43], title: 'src/server/development.js'},
-            {loc: [5, 6], note: '1. import socket.io'},
-            {loc: [39, 40], note: '2. attach socket to server'},
-            {loc: [42, 43], note: '3. listen for new connections'},
-          ]}
-        />
-        <CodeSlide
-          {...codeSlideDefaults}
-          code={codes.solutions.socket}
-          ranges={[
-            {loc: [0, 55], title: 'src/server/socket.js'},
-            {loc: [19, 22], note: '1. listen for draw events and broadcast them to others'},
+            {loc: [0, 31], title: 'Server'},
+            {loc: [23, 24], note: '1. import socket.io'},
+            {loc: [23, 24], note: '2. attach socket to server'},
+            {loc: [26, 27], note: '3. listen for new connections'},
+            {loc: [5, 8], note: '4. listen for "DRAW_POINTS" events and broadcast them to other client sockets'},
           ]}
         />
         {/*
@@ -314,62 +331,60 @@ export default class Presentation extends React.Component {
         */}
         <Slide transition={['fade']}>
           <Heading size={6} caps>Step 2</Heading>
-          <Text size={6}>Users</Text>
+          <Text size={6}>Maintain a list of active users</Text>
         </Slide>
         <Slide
           transition={randomSlide()}
-          notes={slideNotes.step2.client}
         >
-          <Code textAlign="left">src/client/index.js</Code>
           <Heading size={6} caps>Client</Heading>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Emit a login event (eg "LOGIN") to the server when the client is connected with the selected username'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username (multiple ways to do this)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username using an "acknowledgement" when you dispatch the login event'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Listen for an update user list event (eg "UPDATE_USER_LIST") from server and update user list display'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
-          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Listen for login events (eg "LOGIN") from client and save the user using addUser(username, socket.id)'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username (multiple ways to do this)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for login events (eg "LOGIN") from client and save the user using db.create(username, socket.id)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Prevent users from using an existing username using the "acknowledgement" from the client'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Emit an update user list event (eg "UPDATE_USER_LIST") to all clients when there is a login event'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object (*hint: addUser returns the logout fn)'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Listen for "disconnect" events and remove the socket user from the users object (*hint: db.create(username, socket.id) returns the logout fn)'}</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>{'Emit another update user list event after a user has been "logged out"'}</ListItem></Appear>
           </List>
         </Slide>
+        <Slide bgColor="tertiary" transition={['zoom']}>
+          <Heading size={6} textColor="primary" textAlign="top" caps>Concepts</Heading>
+          <CodePane lang="js" source={codes.step2.concepts} margin="20px auto" textSize="0.6em" />
+        </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
-          <Text size={6} textColor="primary">Step 2: Users</Text>
-          {/* <StepLink link={links.step2} actual={links.step2Actual} />
-          <Code>$ git checkout step-2</Code> */}
+          <Text size={6} textColor="primary">Step 2: Maintain a list of active users</Text>
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 2: Solutions</Heading>
-          <Text size={6} textColor="tertiary">Users</Text>
+          <Text size={6} textColor="tertiary">Maintain a list of active users</Text>
         </Slide>
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step2.index}
+          code={codes.step2.app}
           ranges={[
-            {loc: [0, 56], title: 'src/client/index.js'},
-            {loc: [40, 43], note: '1. Emit "LOGIN" event to server on connect'},
-            {loc: [45, 49], note: '2. Listen for "USERNAME_TAKEN" and prompt for another username'},
-            {loc: [51, 56], note: '3. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
+            {loc: [0, 96], title: 'Client'},
+            {loc: [74, 82], note: '1. Emit "LOGIN" event to server on connect'},
+            {loc: [76, 77], note: '2. Prevent users from using an existing username using an "acknowledgement" when you dispatch the login event'},
+            {loc: [83, 91], note: '3. Listen for "UPDATE_USER_LIST" events from server and update user list display'},
           ]}
-          notes={slideNotes.step2.bonus}
         />
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step2.development}
+          code={codes.step2.socket}
           ranges={[
-            {loc: [0, 84], title: 'src/server/socket.js'},
-            {loc: [58, 71], note: '1. Listen for "LOGIN" events from client and update user object'},
-            {loc: [61, 70], note: '2. Prevent users from using an existing username'},
-            {loc: [66, 67], note: '3. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
-            {loc: [73, 78], note: '4. Listen for "disconnect" events and remove the socket user from the users object'},
-            {loc: [76, 77], note: '5. Emit "UPDATE_USER_LIST" after user is removed from users object'},
+            {loc: [0, 45], title: 'Server'},
+            {loc: [13, 21], note: '1. Listen for "LOGIN" events from client and update user object'},
+            {loc: [15, 16], note: '2. Prevent users from using an existing username'},
+            {loc: [18, 19], note: '3. Emit "UPDATE_USER_LIST" to all clients when there is a "LOGIN" event'},
+            {loc: [24, 28], note: '4. Listen for "disconnect" events and remove the socket user from the users object'},
+            {loc: [26, 27], note: '5. Emit "UPDATE_USER_LIST" after user is removed from users object'},
           ]}
         />
         {/*
@@ -382,29 +397,27 @@ export default class Presentation extends React.Component {
           <Text size={6}>Write secret messages to other users</Text>
         </Slide>
         <Slide transition={randomSlide()}>
-          <Code textAlign="left">src/client/index.js</Code>
+          <Code textAlign="left">Client</Code>
           <List ordered>
-            <Appear><ListItem textSize={'1em'}>{'Create buttons for users, when clicked, only dispatch events to that user'}</ListItem></Appear>
-            <Appear><ListItem textSize={'1em'}>{'Hint: two methods are available on the paintCanvas instance to help you:'}
-              <List>
-                <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createUserButton(username)'}</Code></ListItem>
-                <ListItem><Code textSize={'0.8em'}>{'paintCanvas.createAllButton()'}</Code></ListItem>
-              </List>
-            </ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Update the user list display from step 2.3 so that it displays buttons, when clicked, draw events will only be dispatched to that user'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'When a user is selected, filter draw events from other users and only display events from the selected user'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Create a button that, when clicked, will send draw events to all users again'}</ListItem></Appear>
           </List>
         </Slide>
         <Slide transition={randomSlide()}>
           <Heading size={6} caps>Server</Heading>
-          <Text textAlign="left"><Code>src/server/socket.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'1em'}>{'Check if a "toUser" is specified and only broadcast to that user'}</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>{'Include information about the "fromUser" so the client can filter draw events from other users and only display events from the selected user'}</ListItem></Appear>
           </List>
+        </Slide>
+        <Slide bgColor="tertiary" transition={['zoom']}>
+          <Heading size={6} textColor="primary" textAlign="top" caps>Concepts</Heading>
+          <CodePane lang="js" source={codes.step3.concepts} margin="20px auto" textSize="0.6em" />
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Heading size={3} textColor="primary">Get Started!</Heading>
           <Text size={6} textColor="primary">Step 3: Write secret messages to other users</Text>
-          {/* <StepLink link={links.step3} actual={links.step3Actual} />
-          <Code>$ git checkout step-3</Code> */}
         </Slide>
         <Slide bgColor="secondary" textColor="tertiary" transition={randomSlide()}>
           <Heading size={3} textColor="tertiary">Step 3: Solutions</Heading>
@@ -412,18 +425,23 @@ export default class Presentation extends React.Component {
         </Slide>
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step3.index}
+          code={codes.step3.app}
           ranges={[
-            {loc: [0, 65], title: 'src/client/index.js'},
-            {loc: [54, 64], note: '1. Create buttons for users, when clicked, only dispatch events to that user'},
+            {loc: [0, 118], title: 'Client'},
+            {loc: [92, 101], note: '1. This createUser function creates a button that will set "toUser" to a username'},
+            {loc: [50, 54], note: '1. Pass the "toUser" value in the "DRAW_POINTS" events'},
+            {loc: [50, 54], note: '2. Pass the "fromUser" value as the current user\'s username.'},
+            {loc: [58, 61], note: '2. If a "toUser" is specified, filter out draw events from other users'},
+            {loc: [103, 111], note: '3. Create a button that, when clicked, will send draw events to all users again'},
           ]}
         />
         <CodeSlide
           {...codeSlideDefaults}
-          code={codes.step3.development}
+          code={codes.step3.socket}
           ranges={[
-            {loc: [0, 89], title: 'src/server/socket.js'},
-            {loc: [79, 87], note: '1. Check if a "toUser" is specified and only broadcast to that user'},
+            {loc: [0, 89], title: 'Server'},
+            {loc: [28, 35], note: '1. Check if a "toUser" is specified and only broadcast to that user'},
+            {loc: [28, 35], note: '2. Include information about the "fromUser" so the client can filter draw events from other users and only display events from the selected user'},
           ]}
         />
         {/*
@@ -431,10 +449,12 @@ export default class Presentation extends React.Component {
           part-5: fin
           ***********
         */}
-        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Heading size={3} textColor="primary">Running this in Apollo</Heading>
-          <Text size={6} textColor="primary">Some tricks for running a node app in an Apollo environment</Text>
-          <StepLink link={links.amazonBuildExample} actual={links.amazonBuildExampleActual} />
+        <Slide transition={randomSlide()} bgColor="secondary" textColor="tertiary">
+          <Heading size={6} textColor="tertiary">Discuss</Heading>
+          <List ordered>
+            <Appear><ListItem textSize={'1em'}>Flow / TypeScript</ListItem></Appear>
+            <Appear><ListItem textSize={'1em'}>Scaling Horizontally</ListItem></Appear>
+          </List>
         </Slide>
         <Slide transition={randomSlide()} bgColor="secondary" textColor="tertiary">
           <Heading size={6} textColor="tertiary">Questions?</Heading>
@@ -442,15 +462,9 @@ export default class Presentation extends React.Component {
         <Slide transition={['fade']} bgColor="tertiary" textColor="secondary">
           <Heading size={2}>fin</Heading>
         </Slide>
-        <Slide
-          transition={["fade"]} bgColor="secondary">
-          <Heading size={1} textColor="tertiary" caps fit>Zero Time to Load</Heading>
-          <br />
-          <Text textColor="primary">5:30 pm in München 4</Text>
-        </Slide>
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Websockets @ AMZN
+            Websockets Workshop
           </Heading>
           <Heading size={6} caps lineHeight={3} textColor="secondary">
             By Will Farley

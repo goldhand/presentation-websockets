@@ -1,0 +1,11 @@
+// client
+emit('EVENT', data, (response) => {
+  console.log(response); // hello
+});
+
+// server
+on('EVENT', (data, ack) => {
+  if (typeof ack === 'function') {
+    ack('hello');
+  }
+});

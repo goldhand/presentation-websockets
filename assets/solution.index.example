@@ -32,7 +32,7 @@ paintCanvas.subscribe((action, data) => {
   socket.emit(action, data);
 });
 // TODO 1.4: listen for draw events from the server and use paintCanvas.drawLine to draw the points
-socket.on('DRAW_LINE', ({points, color}) => {
+socket.on('DRAW_POINTS', ({points, color}) => {
   paintCanvas.drawLine(points, color);
 });
 
