@@ -158,12 +158,17 @@ export default class Presentation extends React.Component {
         <Slide textColor="primary" transition={['fade']}>
           <Heading size={6} caps>PaintApp.IO</Heading>
         </Slide>
+
         <Slide textColor="primary" transition={randomSlide()}>
           <Heading size={6} caps>Preview</Heading>
-          <Link href={links.herokuActual}>{links.heroku}</Link>
+          <StepLink link={'tiny/74c9bcbr/'} actual={'http://tiny.amazon.com/74c9bcbr/'} />
           <br />
-          <Link href={links.herokuActual}>{links.herokuActual}</Link>
-          <Preview src={links.herokuActual} />
+          <Text>
+            <small>
+              {'Backup: '}
+              <Link href={links.herokuActual}>{links.heroku}</Link>
+            </small>
+          </Text>
         </Slide>
         <Slide transition={['zoom']}>
           <Heading size={6} caps>Client</Heading>
@@ -212,38 +217,29 @@ export default class Presentation extends React.Component {
           <Appear><Text size={6} textAlign="left" textColor="primary">{'Decide if you\'re going to develop locally or in an apollo environment (your dev desktop), within a brazil workspace using the "PaintAppIO/dev" versionset'}</Text></Appear>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Heading size={4} textColor="primary">"client" should fork or use</Heading>
+          <Heading size={4} textColor="primary">"client" should clone or use</Heading>
           <br />
           <Text size={6} textColor="primary">Local:</Text>
           <StepLink link={'github.com/goldhand/paint-io-client'} actual={'https://github.com/goldhand/paint-io-client'} />
           <Text size={6} textColor="primary">Apollo:</Text>
-          <StepLink link={'code.amazon.com/packages/NodeJS-paint-io-client'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-client'} />
-          <Appear><Text size={6} textColor="primary">{'"server" should clone your teammate\'s fork'}</Text></Appear>
+          <StepLink link={'code/packages/NodeJS-paint-io-client'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-client'} />
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Heading size={4} textColor="primary">"server" should fork or use</Heading>
+          <Heading size={4} textColor="primary">"server" should clone or use</Heading>
           <br />
           <Text size={6} textColor="primary">Local:</Text>
           <StepLink link={'github.com/goldhand/paint-io-server'} actual={'https://github.com/goldhand/paint-io-server'} />
           <Text size={6} textColor="primary">Apollo:</Text>
-          <StepLink link={'code.amazon.com/packages/NodeJS-paint-io-server'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-server'} />
-          <Appear><Text size={6} textColor="primary">{'"client" should clone your teammate\'s fork'}</Text></Appear>
+          <StepLink link={'code/packages/NodeJS-paint-io-server'} actual={'https://code.amazon.com/packages/NodeJS-paint-io-server'} />
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Heading size={4} textColor="primary">From each package directory, run:</Heading>
+          <Heading size={4} textColor="primary">From the package directory, run:</Heading>
           <br />
           <Text size={6} textColor="primary">Local:</Text>
           <Text textAlign="left"><Code textSize="0.7em">$ npm install</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ npm start</Code></Text>
           <Text size={6} textColor="primary">Apollo:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build release</Code></Text>
-        </Slide>
-        <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
-          <Heading size={4} textColor="primary">From the paint-io-server package, run:</Heading>
-          <br />
-          <Text size={6} textColor="primary">Local:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ npm run watch</Code></Text>
-          <Text size={6} textColor="primary">Apollo:</Text>
-          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build watch</Code></Text>
+          <Text textAlign="left"><Code textSize="0.7em">$ brazil-build start</Code></Text>
         </Slide>
         <Slide bgColor="tertiary" textColor="primary" transition={['fade']}>
           <Text size={6} textAlign="left" textColor="primary">You should only need to edit one file in each package.</Text>
@@ -271,7 +267,7 @@ export default class Presentation extends React.Component {
           <Text textAlign="left"><Code>src/app.js</Code></Text>
           <List ordered>
             <Appear><ListItem textSize={'0.7em'}>import socket.io-client</ListItem></Appear>
-            <Appear><ListItem textSize={'0.7em'}>{`create a new socket connection by invoking "socket.io-client". Convention is to name the returned socket instance "socket"`}</ListItem></Appear>
+            <Appear><ListItem textSize={'0.7em'}>{`create a new socket connection to your server by invoking "socket.io-client" with your server's url or ip address`}</ListItem></Appear>
             <Appear><ListItem textSize={'0.7em'}>{`emit a "DRAW_POINTS" message to the server when paintCanvas has mouseMove events`}</ListItem></Appear>
             <Appear><ListItem textSize={'0.7em'}>
               {`listen for draw events from the server of the draw action-type (eg "DRAW_POINTS") and use the "paintCanvas.drawLine(Array<{x: number, y: number}>, color: string)" method to draw the points on the canvas.`}
@@ -455,6 +451,16 @@ export default class Presentation extends React.Component {
             <Appear><ListItem textSize={'1em'}>Flow / TypeScript</ListItem></Appear>
             <Appear><ListItem textSize={'1em'}>Scaling Horizontally</ListItem></Appear>
           </List>
+        </Slide>
+        <Slide transition={randomSlide()} bgColor="primary" textColor="tertiary">
+          <Heading size={6} textColor="tertiary">Resources</Heading>
+          <StepLink link="AWS Fargate / ECS with Socket.IO" actual={'https://medium.com/containers-on-aws/building-a-socket-io-chat-app-and-deploying-it-using-aws-fargate-86fd7cbce13f'} />
+        </Slide>
+        <Slide transition={randomSlide()} bgColor="primary" textColor="tertiary">
+          <Heading size={6} textColor="tertiary">Cache these if you want to use brazil</Heading>
+          <StepLink actual={'https://code.amazon.com/version-sets/PaintAppIO/dev'} link={'code/version-sets/PaintAppIO/dev'} />
+          <StepLink actual={'https://code.amazon.com/packages/NodeJS-paint-io-server'} link={'code/packages/NodeJS-paint-io-server'} />
+          <StepLink actual={'https://code.amazon.com/packages/NodeJS-paint-io-client'} link={'code/packages/NodeJS-paint-io-client'} />
         </Slide>
         <Slide transition={randomSlide()} bgColor="secondary" textColor="tertiary">
           <Heading size={6} textColor="tertiary">Questions?</Heading>
